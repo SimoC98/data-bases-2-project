@@ -10,14 +10,11 @@
     <name>data_bases_2_project</name>
     <packaging>war</packaging>
 
-
-
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         <junit.version>5.6.2</junit.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>javax</groupId>
