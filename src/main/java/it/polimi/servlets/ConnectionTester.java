@@ -16,12 +16,12 @@ public class ConnectionTester extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final String DB_URL = "jdbc:mysql://localhost:3306/dabatases2?serverTimezone=UTC";
-        final String USER = "root"; //put user
-        final String PASS = ""; //put password
+        final String DB_URL = "jdbc:mysql://us-cdbr-east-02.cleardb.com:3306/heroku_15190ee898a542b";
+        final String USER = "bb975dbed5f5d5"; //put user
+        final String PASS = "816ae527"; //put password
         String result = "Connection worked";
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (Exception e) {
             result = "Connection failed!";
