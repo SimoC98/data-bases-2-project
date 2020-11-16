@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="data_bases_2_project:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>data_bases_2_project</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="data_bases_2_project-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="data_bases_2_project:war exploded" />
+    </root>
+  </artifact>
+</component>

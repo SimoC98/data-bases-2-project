@@ -1,4 +1,4 @@
-package it.polimi.servlets;
+package it.polimi.db2.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,9 +16,9 @@ public class ConnectionTester extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final String DB_URL = "jdbc:mysql://us-cdbr-east-02.cleardb.com:3306/heroku_15190ee898a542b";
-        final String USER = "bb975dbed5f5d5"; //put user
-        final String PASS = "816ae527"; //put password
+        final String DB_URL = "jdbc:mysql://us-cdbr-east-02.cleardb.com:3306";
+        final String USER = "bea6475ea84f90"; //put user
+        final String PASS = "a59a949c"; //put password
         String result = "Connection worked";
         try {
             Class.forName("com.mysql.jdbc.Driver");

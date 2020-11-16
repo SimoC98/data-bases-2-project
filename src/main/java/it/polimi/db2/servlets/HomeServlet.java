@@ -1,4 +1,4 @@
-package it.polimi.servlets;
+package it.polimi.db2.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
