@@ -19,6 +19,11 @@ public class ConnectionTester extends HttpServlet {
         final String DB_URL = "jdbc:mysql://us-cdbr-east-02.cleardb.com:3306";
         final String USER = "bea6475ea84f90"; //put user
         final String PASS = "a59a949c"; //put password
+
+        final String DB_URL2 = "jdbc:mysql://eu-cdbr-west-03.cleardb.net/heroku_7795bfa940122a4";
+        final String USER2 = "bb1cf235930727"; //put user
+        final String PASS2 = "6f93897d"; //put password
+
         String result = "Connection worked";
         try {
             Class.forName("com.mysql.jdbc.Driver");
