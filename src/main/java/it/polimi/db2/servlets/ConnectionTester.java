@@ -15,12 +15,10 @@ public class ConnectionTester extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, IOException {
-
-        final String DB_URL = "jdbc:mysql://eu-cdbr-west-03.cleardb.net/heroku_7795bfa940122a4";
-        final String USER = "bb1cf235930727"; //put user
-        final String PASS = "6f93897d"; //put password
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        final String DB_URL = "jdbc:mysql://us-cdbr-east-02.cleardb.com:3306";
+        final String USER = "bea6475ea84f90"; //put user
+        final String PASS = "a59a949c"; //put password
         String result = "Connection worked";
         try {
             Class.forName("com.mysql.jdbc.Driver");
