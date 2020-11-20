@@ -2,8 +2,10 @@
 #Ignore IDEA files
 ./idea
 .idea
+\.idea
 #Ignore MAVEN files
 /target/
 target
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+'.idea' 
