@@ -1,6 +1,7 @@
 
 #Ignore IDEA files
-./idea
+.idea/
+.idea
 
 #Ignore MAVEN files
 /target/
