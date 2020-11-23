@@ -87,4 +87,9 @@ public class User {
         this.compilations.add(compilation);
         compilation.addUser(this);
     }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setUser(this);
+    }
 }
