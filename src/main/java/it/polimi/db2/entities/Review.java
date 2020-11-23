@@ -13,33 +13,36 @@ public class Review implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User idUser;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "id_product")
-    private Product idProduct;
+    private Product product;
 
     @Column(name = "review_text")
     private String reviewText;
+
+    public User getUser() {
+        return user;
+    }
+
+    public Review(){}
 
     public Review(String text){
         this.reviewText = text;
     }
 
-    public User getUser() {
-        return idUser;
-    }
 
-    public void setUser(User idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Product getProduct() {
-        return idProduct;
+        return product;
     }
 
-    public void setProduct(Product idProduct) {
-        this.idProduct = idProduct;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getReviewText() {

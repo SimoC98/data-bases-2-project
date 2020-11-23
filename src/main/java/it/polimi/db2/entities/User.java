@@ -1,12 +1,17 @@
 package it.polimi.db2.entities;
 
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "user")
+@NamedQueries({@NamedQuery(name = "User.findUserByUsername", query = "select u from User u where u.username = :username"),
+        @NamedQuery(name = "User.findUserByEmail", query="select u from User u where u.email = :email"),
+        @NamedQuery(name = "User.findUserByCredentials", query = "select u from User u where u.username=:username and u.password=:password")})
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -20,7 +25,25 @@ public class User {
     private String password;
 
     @Column(name = "blocked")
-    private Integer blocked;
+    private boolean blocked;
+
+    @OneToMany(fetch=FetchType.LAZY,mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Compilation> compilations;
+
+    @OneToMany(fetch=FetchType.LAZY,mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
+    public User() {
+    }
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        //this.compilations = new ArrayList<Compilation>();
+    }
+
+
 
     public Integer getId() {
         return this.id;
@@ -54,11 +77,21 @@ public class User {
         this.password = password;
     }
 
-    public Integer getBlocked() {
+    public boolean getBlocked() {
         return this.blocked;
     }
 
-    public void setBlocked(Integer blocked) {
+    public void setBlocked(boolean blocked) {
         this.blocked = blocked;
+    }
+
+    public void addCompilation(Compilation compilation) {
+        this.compilations.add(compilation);
+        compilation.setUser(this);
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setUser(this);
     }
 }

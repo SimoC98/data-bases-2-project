@@ -1,4 +1,5 @@
 package it.polimi.db2.entities;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -32,9 +33,6 @@ public class Compilation implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "compilation", cascade = CascadeType.ALL)
     private List<Answer> answers;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "compilation", cascade = CascadeType.ALL)
-    private List<User> users;
-
     public User getUser() {
         return user;
     }
@@ -65,22 +63,6 @@ public class Compilation implements Serializable {
 
     public void removeAnswer(Answer a) {
         getAnswers().remove(a);
-    }
-
-    public void addUser(User u) {
-        getUsers().add(u);
-    }
-
-    public void removeUser(User u) {
-        getUsers().remove(u);
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     public Integer getPoints() {
