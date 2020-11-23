@@ -21,19 +21,19 @@ public class Review {
     @Column(name = "review_text")
     private Integer reviewText;
 
-    public User getIdUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setIdUser(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public Product getIdProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setIdProduct(Product product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 
