@@ -27,10 +27,10 @@ public class User {
     @Column(name = "blocked")
     private boolean blocked;
 
-    @OneToMany(fetch=FetchType.LAZY,mappedBy = "id_user", cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY,mappedBy = "user", cascade = CascadeType.ALL)
     private List<Compilation> compilations;
 
-    @OneToMany(fetch=FetchType.LAZY,mappedBy = "id_user", cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY,mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     public User() {
@@ -87,6 +87,6 @@ public class User {
 
     public void addCompilation(Compilation compilation) {
         this.compilations.add(compilation);
-        compilation.addUser(this);
+        compilation.setUser(this);
     }
 }
