@@ -1,22 +1,29 @@
 package it.polimi.db2.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "answer")
-public class Answer {
+public class Answer implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_answer")
     private Integer idAnswer;
 
-    @Column(name = "question")
-    private Integer question;
+    @ManyToOne
+    @JoinColumn(name = "question")
+    private Question question;
 
-    @Column(name = "user")
-    private Integer user;
-
-    @Column(name = "questionnaire")
-    private Integer questionnaire;
+    @ManyToOne
+    @JoinColumns({
+        @JoinColumn(name="user"),
+        @JoinColumn(name= "id_product")
+    })
+    private Compilation compilation;
 
     @Column(name = "answer_text")
     private String answerText;
@@ -29,29 +36,17 @@ public class Answer {
         this.idAnswer = idAnswer;
     }
 
-    public Integer getQuestion() {
+    public Question getQuestion() {
         return this.question;
     }
 
-    public void setQuestion(Integer question) {
+    public void setQuestion(Question question) {
         this.question = question;
     }
 
-    public Integer getUser() {
-        return this.user;
-    }
+    public void setCompilation(Compilation compilation){this.compilation = compilation;}
 
-    public void setUser(Integer user) {
-        this.user = user;
-    }
-
-    public Integer getQuestionnaire() {
-        return this.questionnaire;
-    }
-
-    public void setQuestionnaire(Integer questionnaire) {
-        this.questionnaire = questionnaire;
-    }
+    public Compilation getCompilation(){return this.compilation;}
 
     public String getAnswerText() {
         return this.answerText;
