@@ -1,16 +1,18 @@
 package it.polimi.db2.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "question")
 public class Question {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_question")
     private Integer idQuestion;
 
-    @Column(name = "questionnaire")
-    private Integer questionnaire;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
+    private List<Answer> answers;
 
     @Column(name = "question_text")
     private String questionText;
@@ -24,14 +26,6 @@ public class Question {
 
     public void setIdQuestion(Integer idQuestion) {
         this.idQuestion = idQuestion;
-    }
-
-    public Integer getQuestionnaire() {
-        return this.questionnaire;
-    }
-
-    public void setQuestionnaire(Integer questionnaire) {
-        this.questionnaire = questionnaire;
     }
 
     public String getQuestionText() {

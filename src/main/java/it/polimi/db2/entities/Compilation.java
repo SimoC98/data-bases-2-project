@@ -1,20 +1,27 @@
 package it.polimi.db2.entities;
-
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "compilation")
-public class Compilation {
-    @Id
-    @Column(name = "id_user")
-    private Integer idUser;
+public class Compilation implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "id_questionnaire")
-    private Integer idQuestionnaire;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "id_product")
+    private Product product;
 
     @Column(name = "points")
     private Integer points;
+
 
     @Column(name = "deleted")
     private Byte deleted;
@@ -22,20 +29,58 @@ public class Compilation {
     @Column(name = "log")
     private java.sql.Timestamp log;
 
-    public Integer getIdUser() {
-        return this.idUser;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "compilation", cascade = CascadeType.ALL)
+    private List<Answer> answers;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "compilation", cascade = CascadeType.ALL)
+    private List<User> users;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getIdQuestionnaire() {
-        return this.idQuestionnaire;
+    public Product product() {
+        return product;
     }
 
-    public void setIdQuestionnaire(Integer idQuestionnaire) {
-        this.idQuestionnaire = idQuestionnaire;
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public void addAnswer(Answer a) {
+        getAnswers().add(a);
+    }
+
+    public void removeAnswer(Answer a) {
+        getAnswers().remove(a);
+    }
+
+    public void addUser(User u) {
+        getUsers().add(u);
+    }
+
+    public void removeUser(User u) {
+        getUsers().remove(u);
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public Integer getPoints() {
