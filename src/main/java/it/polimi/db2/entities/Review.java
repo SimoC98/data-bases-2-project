@@ -12,30 +12,29 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User idUser;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "id_product")
-    private Product idProduct;
+    private Product product;
 
     @Column(name = "review_text")
     private Integer reviewText;
 
-
     public User getIdUser() {
-        return idUser;
+        return user;
     }
 
-    public void setIdUser(User idUser) {
-        this.idUser = idUser;
+    public void setIdUser(User user) {
+        this.user = user;
     }
 
     public Product getIdProduct() {
-        return idProduct;
+        return product;
     }
 
-    public void setIdProduct(Product idProduct) {
-        this.idProduct = idProduct;
+    public void setIdProduct(Product product) {
+        this.product = product;
     }
 
     public Integer getReviewText() {
