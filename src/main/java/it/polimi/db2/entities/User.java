@@ -1,6 +1,7 @@
 package it.polimi.db2.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
