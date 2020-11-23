@@ -17,5 +17,6 @@ public class ReviewService {
         user.addReview(review);
         product.addReview(review);
         em.persist(review);
+        return review;
     }
 }
