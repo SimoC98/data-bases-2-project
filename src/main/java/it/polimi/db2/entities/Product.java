@@ -1,11 +1,19 @@
 package it.polimi.db2.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
-public class Product {
+@NamedQueries({
+        @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
+        @NamedQuery(name = "Product.findByDate", query = "SELECT p FROM Product p WHERE p.date = :date")
+})
+public class Product implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_product")
     private Integer idProduct;
 
@@ -18,11 +26,32 @@ public class Product {
     @Column(name = "price")
     private Float price;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date")
-    private java.sql.Date date;
+    private Date date;
 
-  /*  @Column(name = "image")
-    private null image;*/
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Question> questions;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Compilation> compilations;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
+    public Product(){}
+
+    public Product(String name, String description, Float price, Date date, byte[] image){
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.date = date;
+        this.image = image;
+    }
 
     public Integer getIdProduct() {
         return this.idProduct;
@@ -56,19 +85,42 @@ public class Product {
         this.price = price;
     }
 
-    public java.sql.Date getDate() {
+    public Date getDate() {
         return this.date;
     }
 
     public void setDate(java.sql.Date date) {
         this.date = date;
     }
-/*
-    public null getImage() {
+
+    public byte[] getImage() {
         return this.image;
     }
 
-    public void setImage(null image) {
+    public void setImage(byte[] image) {
         this.image = image;
-    }*/
+    }
+
+    public List<Question> getQuestions() { return this.questions; }
+
+    public void addQuestion(Question question){
+        getQuestions().add(question);
+        question.setProduct(this);
+    }
+
+    public List<Compilation> getCompilations() { return this.compilations; }
+
+    public void addCompilation(Compilation compilation){
+        getCompilations().add(compilation);
+        //compilation.setProduct(this);
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void addReviews(Review review) {
+        getReviews().add(review);
+        review.setProduct(this);
+    }
 }
