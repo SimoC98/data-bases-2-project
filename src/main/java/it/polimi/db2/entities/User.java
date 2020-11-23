@@ -83,11 +83,8 @@ public class User {
         this.blocked = blocked;
     }
 
-    /*
-    update both side of relationship
-     */
-    /*public void addCompilation(Compilation compilation) {
+    public void addCompilation(Compilation compilation) {
         this.compilations.add(compilation);
-        //compilation.add(this);
-    }*/
+        compilation.addUser(this);
+    }
 }
