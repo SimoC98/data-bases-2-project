@@ -119,7 +119,7 @@ public class Product implements Serializable {
         return reviews;
     }
 
-    public void addReviews(Review review) {
+    public void addReview(Review review) {
         getReviews().add(review);
         review.setProduct(this);
     }

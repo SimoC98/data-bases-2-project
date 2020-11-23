@@ -1,10 +1,11 @@
 package it.polimi.db2.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "review")
-public class Review {
+public class Review implements Serializable {
     @Id
     @Column(name = "id_review")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,38 +20,41 @@ public class Review {
     private Product idProduct;
 
     @Column(name = "review_text")
-    private Integer reviewText;
+    private String reviewText;
 
+    public Review(String text){
+        this.reviewText = text;
+    }
 
-    public User getIdUser() {
+    public User getUser() {
         return idUser;
     }
 
-    public void setIdUser(User idUser) {
+    public void setUser(User idUser) {
         this.idUser = idUser;
     }
 
-    public Product getIdProduct() {
+    public Product getProduct() {
         return idProduct;
     }
 
-    public void setIdProduct(Product idProduct) {
+    public void setProduct(Product idProduct) {
         this.idProduct = idProduct;
     }
 
-    public Integer getReviewText() {
+    public String getReviewText() {
         return this.reviewText;
     }
 
-    public void setReviewText(Integer reviewText) {
+    public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
     }
 
-    public Integer getIdReview() {
+    public Integer getReview() {
         return this.idReview;
     }
 
-    public void setIdReview(Integer idReview) {
+    public void setReview(Integer idReview) {
         this.idReview = idReview;
     }
 }
