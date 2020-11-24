@@ -10,7 +10,8 @@ import java.util.List;
 @Table(name = "product")
 @NamedQueries({
         @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-        @NamedQuery(name = "Product.findByDate", query = "SELECT p FROM Product p WHERE p.date = :date")
+        @NamedQuery(name = "Product.findByDate", query = "SELECT p FROM Product p WHERE p.date = :date"),
+        @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.idProduct = :idProduct")
 })
 public class Product implements Serializable {
     @Id

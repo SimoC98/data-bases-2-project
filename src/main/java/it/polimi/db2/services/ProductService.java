@@ -26,10 +26,4 @@ public class ProductService {
         return product;
     }
 
-    public Product findProductById(int productId) {
-        Product product = em.find(Product.class, productId);
-        return product;
-    }
-
-
 }
