@@ -2,13 +2,26 @@ package it.polimi.db2.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @Table(name = "compilation")
+@NamedQueries({
+        @NamedQuery(name = "Compilation.findByProductId", query = "SELECT c FROM Compilation c WHERE c.product = :product"),
+        @NamedQuery(name = "Compilation.findByUserId", query = "SELECT c FROM Compilation c WHERE c.user = :user")
+})
 public class Compilation implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Column(name = "deleted")
+    private Boolean deleted;
+
+    @Column(name = "log")
+    private java.sql.Timestamp log;
+
+    @Column(name = "points")
+    private Integer points;
 
     @Id
     @ManyToOne
@@ -20,18 +33,22 @@ public class Compilation implements Serializable {
     @JoinColumn(name = "id_product")
     private Product product;
 
-    @Column(name = "points")
-    private Integer points;
-
-
-    @Column(name = "deleted")
-    private Byte deleted;
-
-    @Column(name = "log")
-    private java.sql.Timestamp log;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "compilation", cascade = CascadeType.ALL)
     private List<Answer> answers;
+
+    public Compilation(){}
+
+    public Compilation(Timestamp log, Boolean deleted, Integer points){
+        this.log = log;
+        this.deleted = deleted;
+        this.points = points;
+    }
+
+    public Compilation(User user, Product product, Timestamp log, Boolean deleted, Integer points){
+        this.log = log;
+        this.deleted = deleted;
+        this.points = points;
+    }
 
     public User getUser() {
         return user;
@@ -73,11 +90,11 @@ public class Compilation implements Serializable {
         this.points = points;
     }
 
-    public Byte getDeleted() {
+    public Boolean isDeleted() {
         return this.deleted;
     }
 
-    public void setDeleted(Byte deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 
