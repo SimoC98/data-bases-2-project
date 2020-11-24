@@ -14,7 +14,9 @@ public class ReviewService {
     private EntityManager em;
 
     public ReviewService() {}
-    public Review createReview(User user, Product product, String text){
+    public Review createReview(int user_id, int product_id, String text){
+        User user = em.find(User.class,user_id);
+        Product product = em.find(Product.class,product_id);
         Review review = new Review(text);
         user.addReview(review);
         product.addReview(review);

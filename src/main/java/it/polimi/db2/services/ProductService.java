@@ -26,4 +26,10 @@ public class ProductService {
         return product;
     }
 
+    public Product findProductByDate(LocalDate date) {
+        Product p = null;
+        p = em.createNamedQuery("Product.findByDate",Product.class).setParameter("date",date).getSingleResult();
+        return p;
+    }
+
 }
