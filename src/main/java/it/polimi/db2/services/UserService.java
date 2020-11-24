@@ -12,7 +12,7 @@ import java.util.List;
 
 @Stateless
 public class UserService {
-    @PersistenceContext(unitName = "db2_project")
+    @PersistenceContext(unitName = "data_bases_2_project")
     private EntityManager em;
 
     public void registerUser(String username, String email, String password) throws InvalidRegistrationException {

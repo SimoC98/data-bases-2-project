@@ -2,6 +2,7 @@ package it.polimi.db2.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Product implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @Lob
     @Column(name = "image")
@@ -45,7 +46,7 @@ public class Product implements Serializable {
 
     public Product(){}
 
-    public Product(String name, String description, Float price, Date date, byte[] image){
+    public Product(String name, String description, Float price, LocalDate date, byte[] image){
         this.name = name;
         this.description = description;
         this.price = price;
@@ -85,11 +86,11 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public Date getDate() {
-        return this.date;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDate(java.sql.Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

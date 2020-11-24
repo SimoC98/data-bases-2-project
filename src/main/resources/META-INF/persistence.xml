@@ -3,14 +3,14 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
-    <persistence-unit name="default">
-        <!--
-          <properties>
-              <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-              <property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-east-02.cleardb.com:3306/heroku_15190ee898a542b" />
-              <property name="javax.persistence.jdbc.user" value="bb975dbed5f5d5" />
-              <property name="javax.persistence.jdbc.password" value="816ae527" />
-          </properties>
-          -->
+    <persistence-unit name="data_bases_2_project" transaction-type="JTA">
+        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+        <jta-data-source>data_bases_2_project</jta-data-source>
+        <class>it.polimi.db2.entities.User</class>
+        <class>it.polimi.db2.entities.Product</class>
+        <class>it.polimi.db2.entities.Question</class>
+        <class>it.polimi.db2.entities.Answer</class>
+        <class>it.polimi.db2.entities.Compilation</class>
+        <class>it.polimi.db2.entities.Review</class>
     </persistence-unit>
 </persistence>

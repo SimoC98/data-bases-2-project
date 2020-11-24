@@ -6,10 +6,12 @@ import it.polimi.db2.entities.QuestionType;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Stateless
 public class QuestionService {
+    @PersistenceContext(unitName = "data_bases_2_project")
     private EntityManager em;
 
     public QuestionService(){}
