@@ -32,4 +32,8 @@ public class ProductService {
         return p;
     }
 
+    public Product findProductById(int id) {
+        return em.find(Product.class,id);
+    }
+
 }
