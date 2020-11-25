@@ -35,8 +35,7 @@ public class CreateProduct extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-        ZoneId zonedId = ZoneId.of( "America/Montreal" );
+        ZoneId zonedId = ZoneId.of( "Europe/Rome" );
         LocalDate today = LocalDate.now( zonedId );
 
         String name = null;
