@@ -8,8 +8,9 @@ import java.util.List;
 @Entity
 @Table(name = "compilation")
 @NamedQueries({
-        @NamedQuery(name = "Compilation.findByProductId", query = "SELECT c FROM Compilation c WHERE c.product = :product"),
-        @NamedQuery(name = "Compilation.findByUserId", query = "SELECT c FROM Compilation c WHERE c.user = :user")
+        @NamedQuery(name = "Compilation.findByProductId", query = "SELECT c FROM Compilation c WHERE c.product.idProduct = :idProduct"),
+        @NamedQuery(name = "Compilation.findByUserId", query = "SELECT c FROM Compilation c WHERE c.user.id = :idUser"),
+        @NamedQuery(name = "Compilation.findByUser&ProductId", query = "SELECT c FROM Compilation c WHERE c.user = :idUser AND c.product = :idProduct")
 })
 public class Compilation implements Serializable {
 
@@ -38,16 +39,23 @@ public class Compilation implements Serializable {
 
     public Compilation(){}
 
-    public Compilation(Timestamp log, Boolean deleted, Integer points){
+    public Compilation(User user, Product product, Timestamp log){
+        this.user = user;
+        this.product = product;
         this.log = log;
-        this.deleted = deleted;
-        this.points = points;
+        this.points = 0;
     }
 
-    public Compilation(User user, Product product, Timestamp log, Boolean deleted, Integer points){
-        this.log = log;
-        this.deleted = deleted;
-        this.points = points;
+    public void addAnswerPoints(int points){
+        this.points += points;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 
     public User getUser() {
@@ -76,6 +84,7 @@ public class Compilation implements Serializable {
 
     public void addAnswer(Answer a) {
         getAnswers().add(a);
+        a.setCompilation(this);
     }
 
     public void removeAnswer(Answer a) {

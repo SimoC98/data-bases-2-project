@@ -109,12 +109,18 @@ public class Product implements Serializable {
         getQuestions().add(question);
         question.setProduct(this);
     }
+    public void removeQuestions(){
+        getQuestions().clear();
+    }
 
     public List<Compilation> getCompilations() { return this.compilations; }
 
     public void addCompilation(Compilation compilation){
         getCompilations().add(compilation);
-        //compilation.setProduct(this);
+    }
+
+    public void removeCompilation(Compilation compilation){
+        getCompilations().remove(compilation);
     }
 
     public List<Review> getReviews() {

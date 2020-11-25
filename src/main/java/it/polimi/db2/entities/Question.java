@@ -18,7 +18,7 @@ public class Question implements Serializable {
     @Column(name = "id_question")
     private Integer idQuestion;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
     private List<Answer> answers;
 
     @ManyToOne

@@ -5,6 +5,11 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "answer")
+@NamedQueries({
+        @NamedQuery(name = "Answer.findByUserId", query = "SELECT a FROM Answer a WHERE a.compilation.user = :idUser"),
+        @NamedQuery(name = "Answer.findByProductId", query = "SELECT a FROM Answer a WHERE a.compilation.product = :idProduct"),
+        @NamedQuery(name = "Answer.findByQuestionId", query = "SELECT a FROM Answer a WHERE a.question.idQuestion = :idQuestion")
+})
 public class Answer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,6 +32,17 @@ public class Answer implements Serializable {
 
     @Column(name = "answer_text")
     private String answerText;
+
+    public Answer(Integer idAnswer, Question question,String answerText,Compilation compilation) {
+        this.idAnswer = idAnswer;
+        this.question = question;
+        this.answerText = answerText;
+        this.compilation = compilation;
+    }
+
+    public Answer() {
+
+    }
 
     public Integer getIdAnswer() {
         return this.idAnswer;

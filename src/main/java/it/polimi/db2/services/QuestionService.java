@@ -14,28 +14,49 @@ public class QuestionService {
     @PersistenceContext(unitName = "data_bases_2_project")
     private EntityManager em;
 
-    public QuestionService(){}
-
-    public void createFixedQuestion(String text){
-        Question q = new Question(text, QuestionType.FIXED);
-        em.persist(q);
+    public QuestionService() {
     }
 
-    public void createQuestion(String text, int productId){
+    public Question createFixedQuestion(String text) {
+        Question q = new Question(text, QuestionType.FIXED);
+        em.persist(q);
+        return q;
+    }
+
+    public Question createQuestion(String text, int productId) {
         Product product = em.find(Product.class, productId);
         Question q = new Question(text, QuestionType.DYNAMIC);
         product.addQuestion(q);
         em.persist(product);
+        return q;
     }
 
-    public List<Question> findQuestionByProduct(int productId){
+    public List<Question> findQuestionByProduct(int productId) {
         List<Question> questions = em.createNamedQuery("Question.findByProduct", Question.class).
                 setParameter("pId", productId).getResultList();
         return questions;
     }
 
-    public List<Question> findFixedQuestion(){
+    public List<Question> findFixedQuestion() {
         List<Question> questions = em.createNamedQuery("Question.findFixed", Question.class).getResultList();
         return questions;
     }
+
+    public void deleteQuestionsByProductId(Integer idProduct) {
+
+        Product p = em.find(Product.class, idProduct);
+        List<Question> dynamicQuestions = em.createNamedQuery("Question.findByProduct", Question.class).setParameter("pId", idProduct).getResultList();
+        List<Question> fixedQuestions = em.createNamedQuery("Question.findFixed", Question.class).getResultList();
+        for (Question q : dynamicQuestions) {
+            em.remove(q);
+        }
+
+        for (Question q : fixedQuestions) {
+            q.getAnswers().stream().filter(answer -> answer.getCompilation().getProduct().getIdProduct().equals(idProduct)).forEach(answer -> q.getAnswers().remove(answer));
+        }
+        p.removeQuestions();
+
+    }
+
+
 }

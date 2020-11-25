@@ -33,6 +33,27 @@ public class User {
     @OneToMany(fetch=FetchType.LAZY,mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public List<Compilation> getCompilations() {
+        return compilations;
+    }
+
+    public void setCompilations(List<Compilation> compilations) {
+        this.compilations = compilations;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
     public User() {
     }
 
@@ -40,9 +61,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        //this.compilations = new ArrayList<Compilation>();
     }
-
 
 
     public Integer getId() {
@@ -87,7 +106,9 @@ public class User {
 
     public void addCompilation(Compilation compilation) {
         this.compilations.add(compilation);
-        compilation.setUser(this);
+    }
+    public void removeCompilation(Compilation compilation){
+        getCompilations().remove(compilation);
     }
 
     public void addReview(Review review) {
