@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome Page</title>
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="css/myStyle.css" th:href="@{css/mystyle.css}" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="css/bootstrap.css" th:href="@{css/bootstrap.css}" />
 </head>
 <body>
-    <h1>Welcome Page</h1>
+    <h1 class="title text-center p-3">Gamified Marketing App</h1>
+    <div class="d-flex justify-content-center">
+    <form action="CheckLogin" class="align-middle w-25 pt-5" method="POST">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" required>
+        </div>
+        <input class="btn btn-primary w-100" type="submit" value="Login">
+        <a th:href="{/RegisterUser}" class="btn btn-light w-100" role="button">Register</a>
+    </form>
+    </div>
 </body>
 </html>
