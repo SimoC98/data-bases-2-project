@@ -1,5 +1,6 @@
 package it.polimi.db2.services;
 
+import it.polimi.db2.entities.Answer;
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.Question;
 import it.polimi.db2.entities.QuestionType;
@@ -7,6 +8,7 @@ import it.polimi.db2.entities.QuestionType;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -52,7 +54,8 @@ public class QuestionService {
         }
 
         for (Question q : fixedQuestions) {
-            q.getAnswers().stream().filter(answer -> answer.getCompilation().getProduct().getIdProduct().equals(idProduct)).forEach(answer -> q.getAnswers().remove(answer));
+            List<Answer> answers = new ArrayList<Answer>(q.getAnswers());
+            answers.stream().filter(answer -> answer.getCompilation().getProduct().getIdProduct().equals(idProduct)).forEach(answer -> q.getAnswers().remove(answer));
         }
         p.removeQuestions();
 

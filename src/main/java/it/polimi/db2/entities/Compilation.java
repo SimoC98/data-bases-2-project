@@ -13,8 +13,19 @@ import java.util.List;
         @NamedQuery(name = "Compilation.findByUser&ProductId", query = "SELECT c FROM Compilation c WHERE c.user = :idUser AND c.product = :idProduct")
 })
 public class Compilation implements Serializable {
-
     private static final long serialVersionUID = 1L;
+
+    @EmbeddedId
+    private CompilationKey compilationKey;
+
+    @ManyToOne
+    @MapsId("user_id")
+    private User user;
+
+    @ManyToOne
+    @MapsId("product_id")
+    private Product product;
+
     @Column(name = "deleted")
     private Boolean deleted;
 
@@ -23,16 +34,6 @@ public class Compilation implements Serializable {
 
     @Column(name = "points")
     private Integer points;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    private User user;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "id_product")
-    private Product product;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "compilation", cascade = CascadeType.ALL)
     private List<Answer> answers;
