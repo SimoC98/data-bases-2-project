@@ -4,8 +4,6 @@ import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.Question;
 import it.polimi.db2.services.ProductService;
 import it.polimi.db2.services.QuestionService;
-import sun.rmi.server.Dispatcher;
-
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

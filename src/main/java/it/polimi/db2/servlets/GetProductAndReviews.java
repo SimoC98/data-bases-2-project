@@ -3,8 +3,6 @@ package it.polimi.db2.servlets;
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.Review;
 import it.polimi.db2.services.ProductService;
-import jdk.tools.jaotc.LoadedClass;
-
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
