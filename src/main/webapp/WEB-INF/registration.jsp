@@ -1,17 +1,21 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>registration page</title>
     <link rel="stylesheet" type="text/css" media="all"
-          href="../css/myStyle.css" th:href="@{/css/mystyle.css}" />
+          href="${pageContext.request.contextPath}/css/myStyle.css" />
     <link rel="stylesheet" type="text/css" media="all"
-          href="../css/bootstrap.css" th:href="@{/css/bootstrap.css}" />
+          href="${pageContext.request.contextPath}/css/bootstrap.css" />
 </head>
 <body>
 <h1 class="title text-center p-3">Registration</h1>
 <div class="d-flex justify-content-center">
-    <form action="RegisterUser" class="align-middle w-25 pt-5" method="POST">
+    <form action="<c:url value="/register"/>" class="align-middle w-25 pt-5" method="POST">
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" required>
@@ -32,4 +36,4 @@
     </form>
 </div>
 </body>
-</html>l>
+</html>
