@@ -6,6 +6,7 @@ import it.polimi.db2.services.UserService;
 import org.apache.commons.text.StringEscapeUtils;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,8 +45,12 @@ public class CheckLogin extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
         }
 
+        String path = null;
         if(user==null) {
-            //send error_message invalid credentials to login page
+            request.setAttribute("error_msg","Wrong credentials... please try again or register");
+            path = "/WEB-INF/index.jsp";
+            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+            dispatcher.forward(request,response);
         } else {
             request.getSession().setAttribute("user",user);
             System.out.println("user " + user.getUsername() + " is logged in");

@@ -47,15 +47,13 @@ public class RegisterUser extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to register user");
         }
 
-        String path = null;
+        String path = "/WEB-INF/index.jsp";
         if(error!=null) {
-            path = "/WEB-INF/registration.jsp";
             RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             request.setAttribute("error_msg",error);
             dispatcher.forward(request,response);
         }
         else {
-            path = "/WEB-INF/index.jsp";
             response.sendRedirect(path);
         }
 
