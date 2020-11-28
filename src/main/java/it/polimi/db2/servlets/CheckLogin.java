@@ -25,15 +25,15 @@ public class CheckLogin extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = null;
         String password = null;
 
-        username = StringEscapeUtils.escapeJava(req.getParameter("username"));
-        password = StringEscapeUtils.escapeJava(req.getParameter("password"));
+        username = StringEscapeUtils.escapeJava(request.getParameter("username"));
+        password = StringEscapeUtils.escapeJava(request.getParameter("password"));
 
         if(username==null || password==null || username.length()==0 || password.length()==0) {
-            //send error 400
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
         }
 
         User user = null;
@@ -41,13 +41,14 @@ public class CheckLogin extends HttpServlet {
             user = userService.checkCredentials(username,password);
         } catch (InvalidCredentialsException e) {
             e.printStackTrace();
-            //send error 400
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
         }
 
         if(user==null) {
             //send error_message invalid credentials to login page
         } else {
-            req.getSession().setAttribute("user",user);
+            request.getSession().setAttribute("user",user);
+            System.out.println("user " + user.getUsername() + " is logged in");
             //redirect to next page
         }
     }

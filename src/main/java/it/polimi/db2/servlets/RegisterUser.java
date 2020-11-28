@@ -5,6 +5,7 @@ import it.polimi.db2.services.UserService;
 import org.apache.commons.text.StringEscapeUtils;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,14 +26,14 @@ public class RegisterUser extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = StringEscapeUtils.escapeJava(req.getParameter("username"));
-        String email = StringEscapeUtils.escapeJava(req.getParameter("email"));
-        String password = StringEscapeUtils.escapeJava(req.getParameter("password"));
-        String password_conf = StringEscapeUtils.escapeJava(req.getParameter("password_conf"));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = StringEscapeUtils.escapeJava(request.getParameter("username"));
+        String email = StringEscapeUtils.escapeJava(request.getParameter("email"));
+        String password = StringEscapeUtils.escapeJava(request.getParameter("password"));
+        String password_conf = StringEscapeUtils.escapeJava(request.getParameter("password_conf"));
 
         if(username==null || email==null || password==null || password_conf==null || username.isEmpty() || email.isEmpty() || password.isEmpty() || password_conf.isEmpty() ||!password.equals(password_conf)) {
-            //send error 400
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
         }
 
         String error = null;
@@ -43,14 +44,19 @@ public class RegisterUser extends HttpServlet {
             error = e1.getMessage();
         } catch (Exception e2) {
             e2.printStackTrace();
-            //send error 500
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to register user");
         }
 
+        String path = null;
         if(error!=null) {
-            //send back to login page with error message
+            path = "/WEB-INF/registration.jsp";
+            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+            request.setAttribute("error_msg",error);
+            dispatcher.forward(request,response);
         }
         else {
-            //redirect to next page
+            path = "/WEB-INF/index.jsp";
+            response.sendRedirect(path);
         }
 
 

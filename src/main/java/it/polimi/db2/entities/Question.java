@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "question", schema = "heroku_7795bfa940122a4")
+@Table(name = "question")
 @NamedQueries({
         @NamedQuery(name = "Question.findAll", query = "SELECT q FROM Question q"),
         @NamedQuery(name = "Question.findByProduct", query = "Select q FROM Question q WHERE q.product.idProduct = :pId") ,
