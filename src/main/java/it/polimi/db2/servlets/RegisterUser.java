@@ -26,10 +26,10 @@ public class RegisterUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = StringEscapeUtils.escapeJava(req.getParameter("username"));
+        String username = StringEscapeUtils.escapeJava(req.getParameter("user"));
         String email = StringEscapeUtils.escapeJava(req.getParameter("email"));
-        String password = StringEscapeUtils.escapeJava(req.getParameter("password"));
-        String password_conf = StringEscapeUtils.escapeJava(req.getParameter("password_conf"));
+        String password = StringEscapeUtils.escapeJava(req.getParameter("pass"));
+        String password_conf = StringEscapeUtils.escapeJava(req.getParameter("pass_conf"));
 
         if(username==null || email==null || password==null || password_conf==null || username.isEmpty() || email.isEmpty() || password.isEmpty() || password_conf.isEmpty() ||!password.equals(password_conf)) {
             //send error 400
