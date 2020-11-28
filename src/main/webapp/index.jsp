@@ -12,7 +12,7 @@ pageEncoding="ISO-8859-1"%>
 <body>
     <h1 class="title text-center p-3">Gamified Marketing App</h1>
     <div class="d-flex justify-content-center">
-        <form action="<c:url value="/login"/>" class="align-middle w-25 pt-5" method="POST">
+        <form action="<c:url value="/login"/>" id="login" class="align-middle w-25 pt-5" method="POST">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" class="form-control" id="username" required>
@@ -22,8 +22,44 @@ pageEncoding="ISO-8859-1"%>
                 <input type="password" class="form-control" id="password" required>
             </div>
             <input class="btn btn-primary w-100" type="submit" value="Login">
-            <a href="<c:url value="/register"/>" class="btn btn-light w-100" role="button">Register</a>
+            <button onclick="show()" class="btn btn-light w-100" role="button">Register</button>
+        </form>
+
+        <form action="<c:url value="/register"/>" id="registration" class="align-middle w-25 pt-5" method="POST" style="display: none;">
+            <div class="form-group">
+                <label for="user">Username:</label>
+                <input type="text" class="form-control" id="user" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="pass">Password:</label>
+                <input type="password" class="form-control" id="pass" required>
+            </div>
+            <div class="form-group">
+                <label for="pass_conf">Confirm Password:</label>
+                <input type="password" class="form-control" id="pass_conf" required>
+            </div>
+            <input class="btn btn-primary w-100" type="submit" value="Sign up">
+            <button onclick="show()" class="btn btn-light w-100" role="button">Go to Login</button>
         </form>
     </div>
+<script >
+    function show() {
+        var x = document.getElementById("login");
+        var y = document.getElementById("registration");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+        } else {
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+
+    }
+
+</script>
 </body>
 </html>
