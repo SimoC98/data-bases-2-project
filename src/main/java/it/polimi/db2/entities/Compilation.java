@@ -15,15 +15,15 @@ import java.util.List;
 public class Compilation implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-    private CompilationKey compilationKey;
+    @Id
+    private Integer idCompilation;
 
     @ManyToOne
-    @MapsId("user_id")
+    @JoinColumn(name = "id_user")
     private User user;
 
     @ManyToOne
-    @MapsId("product_id")
+    @JoinColumn(name = "id_product")
     private Product product;
 
     @Column(name = "deleted")

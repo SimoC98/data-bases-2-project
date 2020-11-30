@@ -7,7 +7,9 @@ import java.util.Objects;
 
 @Embeddable
 public class CompilationKey implements Serializable {
+    @Column
     private Integer user_id;
+    @Column
     private Integer product_id;
 
     public Integer getUser_id() {
