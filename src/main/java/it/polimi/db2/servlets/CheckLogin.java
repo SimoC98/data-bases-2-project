@@ -35,6 +35,7 @@ public class CheckLogin extends HttpServlet {
 
         if(username==null || password==null || username.length()==0 || password.length()==0) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
+            return;
         }
 
         User user = null;
@@ -43,6 +44,7 @@ public class CheckLogin extends HttpServlet {
         } catch (InvalidCredentialsException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
+            return;
         }
 
         String path = null;

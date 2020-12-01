@@ -20,14 +20,11 @@ public class Answer implements Serializable {
     private Integer idAnswer;
 
     @ManyToOne
-    @JoinColumn(name = "question")
+    @JoinColumn(name = "id_question")
     private Question question;
 
     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name="user"),
-        @JoinColumn(name= "id_product")
-    })
+    @JoinColumn(name = "id_compilation")
     private Compilation compilation;
 
     @Column(name = "answer_text")

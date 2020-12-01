@@ -15,11 +15,11 @@ pageEncoding="ISO-8859-1"%>
         <form action="<c:url value="/login"/>" id="login" class="align-middle w-25 pt-5" method="POST">
             <div class="form-group">
                 <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" required>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" required>
+                <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <input class="btn btn-primary w-100" type="submit" value="Login">
             <button onclick="show()" class="btn btn-light w-100" role="button">Register</button>
@@ -28,19 +28,19 @@ pageEncoding="ISO-8859-1"%>
         <form action="<c:url value="/register"/>" id="registration" class="align-middle w-25 pt-5" method="POST" style="display: none;">
             <div class="form-group">
                 <label for="user">Username:</label>
-                <input type="text" class="form-control" id="user" required>
+                <input type="text" class="form-control" id="user" required name="user">
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="text" class="form-control" id="email" required>
+                <input type="text" class="form-control" id="email" required name="email">
             </div>
             <div class="form-group">
                 <label for="pass">Password:</label>
-                <input type="password" class="form-control" id="pass" required>
+                <input type="password" class="form-control" id="pass" name="pass" required>
             </div>
             <div class="form-group">
                 <label for="pass_conf">Confirm Password:</label>
-                <input type="password" class="form-control" id="pass_conf" required>
+                <input type="password" class="form-control" id="pass_conf" name="pass_conf" required>
             </div>
             <input class="btn btn-primary w-100" type="submit" value="Sign up">
             <button onclick="show()" class="btn btn-light w-100" role="button">Go to Login</button>
@@ -57,9 +57,7 @@ pageEncoding="ISO-8859-1"%>
             x.style.display = "none";
             y.style.display = "block";
         }
-
     }
-
 </script>
 </body>
 </html>
