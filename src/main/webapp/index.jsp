@@ -5,7 +5,10 @@ pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css"/>    -->
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>login</title>
 </head>
@@ -22,9 +25,8 @@ pageEncoding="ISO-8859-1"%>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <input class="btn btn-primary w-100" type="submit" value="Login">
-            <button onclick="show()" class="btn btn-light w-100" role="button">Register</button>
         </form>
-
+        <button onclick="show()" class="btn btn-light w-100" role="button">Register</button>
         <form action="<c:url value="/register"/>" id="registration" class="align-middle w-25 pt-5" method="POST" style="display: none;">
             <div class="form-group">
                 <label for="user">Username:</label>
@@ -43,21 +45,21 @@ pageEncoding="ISO-8859-1"%>
                 <input type="password" class="form-control" id="pass_conf" name="pass_conf" required>
             </div>
             <input class="btn btn-primary w-100" type="submit" value="Sign up">
-            <button onclick="show()" class="btn btn-light w-100" role="button">Go to Login</button>
         </form>
+        <button onclick="show()" class="btn btn-light w-100" role="button">Go to Login</button>
     </div>
-<script >
-    function show() {
-        var x = document.getElementById("login");
-        var y = document.getElementById("registration");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-            y.style.display = "none";
-        } else {
-            x.style.display = "none";
-            y.style.display = "block";
+    <script >
+        function show() {
+            var x = document.getElementById("login");
+            var y = document.getElementById("registration");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+                y.style.display = "none";
+            } else {
+                x.style.display = "none";
+                y.style.display = "block";
+            }
         }
-    }
-</script>
+    </script>
 </body>
 </html>

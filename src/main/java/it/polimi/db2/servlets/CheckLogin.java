@@ -50,7 +50,7 @@ public class CheckLogin extends HttpServlet {
         String path = null;
         if(user==null) {
             request.setAttribute("error_msg","Wrong credentials... please try again or register");
-            path = "/WEB-INF/index.jsp";
+            path = "index.jsp";
             RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             dispatcher.forward(request,response);
         } else {

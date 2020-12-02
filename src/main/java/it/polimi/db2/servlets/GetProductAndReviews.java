@@ -41,8 +41,7 @@ public class GetProductAndReviews extends HttpServlet {
         request.setAttribute("product",p);
         request.setAttribute("reviews",reviews);
 
-        //todo: add path
-        String path = null;
+        String path = "/WEB-INF/Home.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(path);
         dispatcher.forward(request,response);
     }
