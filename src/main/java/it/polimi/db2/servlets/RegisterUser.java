@@ -30,9 +30,11 @@ public class RegisterUser extends HttpServlet {
         String username = StringEscapeUtils.escapeJava(request.getParameter("user"));
         String email = StringEscapeUtils.escapeJava(request.getParameter("email"));
         String password = StringEscapeUtils.escapeJava(request.getParameter("pass"));
-        String password_conf = StringEscapeUtils.escapeJava(request.getParameter("pass_conf"));
+        String passwordConf = StringEscapeUtils.escapeJava(request.getParameter("pass_conf"));
 
-        if(username==null || email==null || password==null || password_conf==null || username.isEmpty() || email.isEmpty() || password.isEmpty() || password_conf.isEmpty() ||!password.equals(password_conf)) {
+        System.out.println(request.getParameter("action"));
+
+        if(username==null || email==null || password==null || passwordConf==null || username.isEmpty() || email.isEmpty() || password.isEmpty() || passwordConf.isEmpty() ||!password.equals(passwordConf)) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
             return;
         }

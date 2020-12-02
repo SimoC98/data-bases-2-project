@@ -22,25 +22,25 @@ public class CreateReview extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        Integer product_id = null;
-        String review_txt = null;
-        boolean bad_request = false;
+        Integer productId = null;
+        String reviewTxt = null;
+        boolean badRequest = false;
 
         try {
-            product_id = Integer.parseInt(request.getParameter("mission_id"));
-            review_txt = request.getParameter("review_txt");
+            productId = Integer.parseInt(request.getParameter("mission_id"));
+            reviewTxt = request.getParameter("review_txt");
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            bad_request = true;
+            badRequest = true;
         }
 
-        if(bad_request || review_txt==null || review_txt.length()==0) {
+        if(badRequest || reviewTxt==null || reviewTxt.length()==0) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
         }
 
         Review review = null;
         try {
-            review = reviewService.createReview(user.getId(),product_id,review_txt);
+            review = reviewService.createReview(user.getId(),productId,reviewTxt);
         } catch(Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Impossible to create review");

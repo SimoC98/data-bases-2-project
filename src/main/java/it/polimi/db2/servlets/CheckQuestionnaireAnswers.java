@@ -27,38 +27,13 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
     private AnswerService answerService;
     @EJB(name = "it.polimi.db2.services/CompilationService")
     private CompilationService compilationService;
-    @EJB(name = "it.polimi.db2.services/ProductService")
-    private ProductService productService;
 
+    //TODO: alternative options?
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer product_id = null;
-        Product product = null;
-        Integer user_id = null;
-        Timestamp log = null;
-        boolean bad_request = false;
-        try {
-            product_id = Integer.parseInt(request.getParameter("product_id"));
-            product = productService.findProductById(product_id);
-        } catch (NumberFormatException | NullPointerException e)   {
-            bad_request = true;
-        }
+        Compilation compilation = (Compilation) request.getAttribute("compilation");
 
-        if(bad_request || product==null) {
+        if(compilation==null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
-        }
-
-        //TODO: check if u is not null in every servlet
-        User u = (User) request.getSession().getAttribute("user");
-        user_id = u.getId();
-
-        log = new Timestamp(System.currentTimeMillis());
-
-        Compilation new_compilation = null;
-        try {
-            new_compilation = compilationService.createCompilation(user_id,product_id,log);
-        } catch (CompilationAlreadyExistingException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
         }
 
         Enumeration<String> params = request.getParameterNames();

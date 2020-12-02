@@ -23,22 +23,22 @@ public class GetProductQuestionnaire extends HttpServlet {
     private QuestionService questionService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer product_id = null;
-        boolean bad_request = false;
+        Integer productId = null;
+        boolean badRequest = false;
         try {
-            product_id = Integer.parseInt(request.getParameter("product_id"));
+            productId = Integer.parseInt(request.getParameter("product_id"));
         } catch (NumberFormatException | NullPointerException e ) {
-            bad_request = true;
+            badRequest = true;
         }
 
         Product p = null;
         try {
-            p = productService.findProductById(product_id);
+            p = productService.findProductById(productId);
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not possible to find this product");
         }
 
-        if(bad_request || p==null) {
+        if(badRequest || p==null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
         }
 
