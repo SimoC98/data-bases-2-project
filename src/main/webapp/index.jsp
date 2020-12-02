@@ -15,38 +15,42 @@ pageEncoding="ISO-8859-1"%>
 <body>
     <h1 class="title text-center p-3">Gamified Marketing App</h1>
     <div class="d-flex justify-content-center">
-        <form action="<c:url value="/login"/>" id="login" class="align-middle w-25 pt-5" method="POST">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <input class="btn btn-primary w-100" type="submit" value="Login">
-        </form>
-        <button onclick="show()" class="btn btn-light w-100" role="button">Register</button>
-        <form action="<c:url value="/register"/>" id="registration" class="align-middle w-25 pt-5" method="POST" style="display: none;">
-            <div class="form-group">
-                <label for="user">Username:</label>
-                <input type="text" class="form-control" id="user" required name="user">
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="text" class="form-control" id="email" required name="email">
-            </div>
-            <div class="form-group">
-                <label for="pass">Password:</label>
-                <input type="password" class="form-control" id="pass" name="pass" required>
-            </div>
-            <div class="form-group">
-                <label for="pass_conf">Confirm Password:</label>
-                <input type="password" class="form-control" id="pass_conf" name="pass_conf" required>
-            </div>
-            <input class="btn btn-primary w-100" type="submit" value="Sign up">
-        </form>
-        <button onclick="show()" class="btn btn-light w-100" role="button">Go to Login</button>
+        <div id="login" class="align-middle w-25 pt-5">
+            <form action="<c:url value="/login"/>" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <input class="btn btn-primary w-100" type="submit" value="Login">
+            </form>
+            <button onclick="show()" class="btn btn-light w-100" role="button">Register</button>
+        </div>
+        <div id="registration" class="align-middle w-25 pt-5"  style="display: none;">
+            <form action="<c:url value="/register"/>" method="POST">
+                <div class="form-group">
+                    <label for="user">Username:</label>
+                    <input type="text" class="form-control" id="user" required name="user">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" id="email" required name="email">
+                </div>
+                <div class="form-group">
+                    <label for="pass">Password:</label>
+                    <input type="password" class="form-control" id="pass" name="pass" required>
+                </div>
+                <div class="form-group">
+                    <label for="pass_conf">Confirm Password:</label>
+                    <input type="password" class="form-control" id="pass_conf" name="pass_conf" required>
+                </div>
+                <input class="btn btn-primary w-100" type="submit" value="Sign up">
+            </form>
+            <button onclick="show()" class="btn btn-light w-100" role="button">Go to Login</button>
+        </div>
     </div>
     <script >
         function show() {
