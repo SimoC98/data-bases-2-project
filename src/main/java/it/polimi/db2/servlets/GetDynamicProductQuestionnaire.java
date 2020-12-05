@@ -4,25 +4,41 @@ import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.Question;
 import it.polimi.db2.services.ProductService;
 import it.polimi.db2.services.QuestionService;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
-@WebServlet(name = "GetProductQuestionnaire")
-public class GetProductQuestionnaire extends HttpServlet {
+@WebServlet(name = "GetDynamicProductQuestionnaire")
+public class GetDynamicProductQuestionnaire extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @EJB(name = "it.polimi.db2.services/ProductService")
     private ProductService productService;
     @EJB(name = "it.polimi.db2.services/QuestionService")
     private QuestionService questionService;
+    private TemplateEngine templateEngine;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void init() throws ServletException {
+        ServletContext servletContext = getServletContext();
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        this.templateEngine = new TemplateEngine();
+        this.templateEngine.setTemplateResolver(templateResolver);
+        templateResolver.setSuffix(".html");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /*
         Integer productId = null;
         boolean badRequest = false;
         try {
@@ -52,10 +68,20 @@ public class GetProductQuestionnaire extends HttpServlet {
 
         questions.addAll(fixed_questions);
 
+        */
+
         //todo: add path
-        String path = null;
-        RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-        request.setAttribute("questions", questions);
-        dispatcher.forward(request,response);
+        List<Question> questions = new LinkedList<>();
+        Question question = new Question();
+        Question question1 = new Question();
+        question.setQuestionText("CIAO");
+        question1.setQuestionText("AGGIUNTO");
+        questions.add(question);
+        questions.add(question1);
+        String path = "/WEB-INF/questionnaire_dynamic.html";
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        ctx.setVariable("questions", questions);
+        templateEngine.process(path, ctx, response.getWriter());
     }
 }
