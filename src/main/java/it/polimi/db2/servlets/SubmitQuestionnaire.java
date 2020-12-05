@@ -26,6 +26,12 @@ public class SubmitQuestionnaire extends HttpServlet {
     @EJB(name = "it.polimi.db2.services/ProductService")
     private ProductService productService;
 
+    /*
+    this servlet is called from the questionnaire_dynamic.html; a compilation is created and
+    if the questionnaire is submitted request is forwarded to CheckQuestionnaireAnswers
+    otherwise if is deleted request is forwarded to DeleteQuestionnaire.
+    Buttons of front had should have name="action" and value="submit" or "delete"
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer productId = null;
         Product product = null;

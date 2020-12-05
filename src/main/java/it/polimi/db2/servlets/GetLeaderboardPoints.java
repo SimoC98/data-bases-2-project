@@ -14,6 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/*
+this servlet return 2 lists:
+- users is a list of String containing usernames
+- points is a list of Integer containing points
+both lists are ordered according to points
+ */
 @WebServlet(name = "GetLeaderboardPoints")
 public class GetLeaderboardPoints extends HttpServlet {
     @EJB(name = "it.polimi.db2.services/CompilationService")

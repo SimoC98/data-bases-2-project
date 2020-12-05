@@ -86,4 +86,20 @@
         <servlet-name>RegisterUser</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteQuestionnaire</servlet-name>
+        <servlet-class>it.polimi.db2.servlets.DeleteQuestionnaire</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteQuestionnaire</servlet-name>
+        <url-pattern>/DeleteQuestionnaire</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>GetLeaderboardPoints</servlet-name>
+        <servlet-class>it.polimi.db2.servlets.GetLeaderboardPoints</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetLeaderboardPoints</servlet-name>
+        <url-pattern>/GetLeaderboardPoints</url-pattern>
+    </servlet-mapping>
 </web-app>
