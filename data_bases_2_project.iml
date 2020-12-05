@@ -5,7 +5,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="data_bases_2_project" value="c8cdb7b0-cd34-44cc-ac6a-93b393205039" />
+          <factory-entry name="data_bases_2_project" value="d5e3c522-620f-4634-8528-2033cab709fa" />
           <factory-entry name="default" value="8ad32ac9-20c5-49f7-ba81-89fb9232b131" />
         </datasource-mapping>
         <naming-strategy-map />
@@ -54,5 +54,13 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.11" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.openjpa:openjpa-all:3.1.2" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.21" level="project" />
+    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
+    <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf:3.0.11.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: ognl:ognl:3.1.12" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.20.0-GA" level="project" />
+    <orderEntry type="library" name="Maven: org.attoparser:attoparser:2.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.unbescape:unbescape:1.1.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
   </component>
 </module>

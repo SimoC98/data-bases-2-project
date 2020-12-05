@@ -29,8 +29,8 @@ public class SubmitQuestionnaire extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer productId = null;
         Product product = null;
-        Integer userId = null;
         Timestamp log = null;
+        User u = (User) request.getSession().getAttribute("user");
         boolean badRequest = false;
         try {
             productId = Integer.parseInt(request.getParameter("product_id"));
@@ -43,15 +43,11 @@ public class SubmitQuestionnaire extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
         }
 
-        //TODO: check if u is not null in every servlet
-        User u = (User) request.getSession().getAttribute("user");
-        userId = u.getId();
-
         log = new Timestamp(System.currentTimeMillis());
 
         Compilation newCompilation = null;
         try {
-            newCompilation = compilationService.createCompilation(userId,productId,log);
+            newCompilation = compilationService.createCompilation(u.getId(),productId,log);
         } catch (CompilationAlreadyExistingException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());

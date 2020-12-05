@@ -10,7 +10,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Compilation.findByProductId", query = "SELECT c FROM Compilation c WHERE c.product.idProduct = :idProduct"),
         @NamedQuery(name = "Compilation.findByUserId", query = "SELECT c FROM Compilation c WHERE c.user.id = :idUser"),
-        @NamedQuery(name = "Compilation.findByUser&ProductId", query = "SELECT c FROM Compilation c WHERE c.user = :idUser AND c.product = :idProduct")
+        @NamedQuery(name = "Compilation.findByUser&ProductId", query = "SELECT c FROM Compilation c WHERE c.user = :idUser AND c.product = :idProduct"),
+        @NamedQuery(name = "Compilation.getOrderedCompilation", query = "SELECT c FROM Compilation c WHERE c.product = :idProduct order by c.points desc")
 })
 public class Compilation implements Serializable {
     private static final long serialVersionUID = 1L;

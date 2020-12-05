@@ -62,4 +62,10 @@ public class CompilationService {
         }
     }
 
+    public List<Compilation> getOrderedCompilations(int productId) {
+        List<Compilation> compilations = em.createNamedQuery("Compilation.getOrderedCompilation",Compilation.class).setParameter("idProduct",productId).getResultList();
+        return compilations;
+    }
+
+
 }

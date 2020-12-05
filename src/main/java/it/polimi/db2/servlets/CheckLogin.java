@@ -55,8 +55,9 @@ public class CheckLogin extends HttpServlet {
             dispatcher.forward(request,response);
         } else {
             request.getSession().setAttribute("user",user);
-            System.out.println("user " + user.getUsername() + " is logged in");
-            //redirect to next page
+            path = "GetProductAndReviews";
+            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+            dispatcher.forward(request,response);
         }
     }
 
