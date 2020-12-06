@@ -3,9 +3,14 @@ package it.polimi.db2.servlets;
 import it.polimi.db2.exception.InvalidRegistrationException;
 import it.polimi.db2.services.UserService;
 import org.apache.commons.text.StringEscapeUtils;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,13 +21,19 @@ import java.io.IOException;
 @WebServlet(name = "RegisterUser")
 public class RegisterUser extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private TemplateEngine templateEngine;
 
     @EJB(name = "it.polimi.db2.services/UserService")
     private UserService userService;
 
     @Override
     public void init() throws ServletException {
-        super.init();
+        ServletContext servletContext = getServletContext();
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        this.templateEngine = new TemplateEngine();
+        this.templateEngine.setTemplateResolver(templateResolver);
+        templateResolver.setSuffix(".html");
     }
 
     @Override
@@ -56,6 +67,10 @@ public class RegisterUser extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             request.setAttribute("error_msg",error);
             dispatcher.forward(request,response);
+            ServletContext servletContext = request.getServletContext();
+            final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
+            ctx.setVariable("error_msg","Wrong credentials... please try again or register");
+            templateEngine.process(path,ctx,response.getWriter());
         }
         else {
             response.sendRedirect(path);

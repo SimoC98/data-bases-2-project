@@ -4,9 +4,14 @@ import it.polimi.db2.entities.User;
 import it.polimi.db2.exception.InvalidCredentialsException;
 import it.polimi.db2.services.UserService;
 import org.apache.commons.text.StringEscapeUtils;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,10 +24,16 @@ public class CheckLogin extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @EJB(name = "it.polimi.db2.services/UserService")
     private UserService userService;
+    private TemplateEngine templateEngine;
 
     @Override
     public void init() throws ServletException {
-        super.init();
+        ServletContext servletContext = getServletContext();
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        this.templateEngine = new TemplateEngine();
+        this.templateEngine.setTemplateResolver(templateResolver);
+        templateResolver.setSuffix(".html");
     }
 
     @Override
@@ -47,17 +58,23 @@ public class CheckLogin extends HttpServlet {
             return;
         }
 
+        //jstl operations for forward commented
         String path = null;
         if(user==null) {
-            request.setAttribute("error_msg","Wrong credentials... please try again or register");
             path = "index.jsp";
-            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-            dispatcher.forward(request,response);
+            ServletContext servletContext = request.getServletContext();
+            final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
+            ctx.setVariable("error_msg","Wrong credentials... please try again or register");
+            templateEngine.process(path,ctx,response.getWriter());
+            //request.setAttribute("error_msg","Wrong credentials... please try again or register");
+            //RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+            //dispatcher.forward(request,response);
         } else {
             request.getSession().setAttribute("user",user);
             path = "GetProductAndReviews";
-            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-            dispatcher.forward(request,response);
+            response.sendRedirect(path);
+            //RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+            //dispatcher.forward(request,response);
         }
     }
 

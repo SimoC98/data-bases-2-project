@@ -3,9 +3,14 @@ package it.polimi.db2.servlets;
 import it.polimi.db2.entities.Compilation;
 import it.polimi.db2.entities.User;
 import it.polimi.db2.services.CompilationService;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,9 +29,16 @@ both lists are ordered according to points
 public class GetLeaderboardPoints extends HttpServlet {
     @EJB(name = "it.polimi.db2.services/CompilationService")
     private CompilationService compilationService;
+    private TemplateEngine templateEngine;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    @Override
+    public void init() throws ServletException {
+        ServletContext servletContext = getServletContext();
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        this.templateEngine = new TemplateEngine();
+        this.templateEngine.setTemplateResolver(templateResolver);
+        templateResolver.setSuffix(".html");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,10 +70,10 @@ public class GetLeaderboardPoints extends HttpServlet {
 
         //todo: add path
         String path = null;
-        request.setAttribute("users",users);
-        request.setAttribute("points",points);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-        dispatcher.forward(request,response);
+        ServletContext servletContext = request.getServletContext();
+        final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
+        ctx.setVariable("users",users);
+        ctx.setVariable("points",points);
+        templateEngine.process(path,ctx,response.getWriter());
     }
 }

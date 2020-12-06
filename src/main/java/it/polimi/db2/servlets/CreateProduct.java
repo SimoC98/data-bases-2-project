@@ -5,10 +5,15 @@ import it.polimi.db2.exception.ProductAlreadyExistingException;
 import it.polimi.db2.services.ProductService;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.text.StringEscapeUtils;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,11 +29,17 @@ public class CreateProduct extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @EJB(name = "it.polimi.db2.services/ProductService")
     private ProductService productService;
+    private TemplateEngine templateEngine;
 
 
     @Override
     public void init() throws ServletException {
-        super.init();
+        ServletContext servletContext = getServletContext();
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        this.templateEngine = new TemplateEngine();
+        this.templateEngine.setTemplateResolver(templateResolver);
+        templateResolver.setSuffix(".html");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,7 +58,6 @@ public class CreateProduct extends HttpServlet {
             name = StringEscapeUtils.escapeJava(request.getParameter("name"));
             description = StringEscapeUtils.escapeJava(request.getParameter("description"));
             price = Float.parseFloat(request.getParameter("price"));
-            //date = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date"));
             date = LocalDate.parse(request.getParameter("date"));
             if(date.isBefore(today)) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Invalid date selected");
@@ -61,12 +71,13 @@ public class CreateProduct extends HttpServlet {
 
         if(badRequest || name==null || description==null || image==null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+            return;
         }
 
-        Product new_product = null;
+        Product newProduct = null;
         String error = null;
         try {
-            new_product = productService.createProduct(name,description,price,date,image);
+            newProduct = productService.createProduct(name,description,price,date,image);
         } catch (ProductAlreadyExistingException e) {
             e.printStackTrace();
             error = e.getMessage();
@@ -79,15 +90,14 @@ public class CreateProduct extends HttpServlet {
          */
         //todo: add path
         String path = null;
-        RequestDispatcher dispatcher = request.getRequestDispatcher(path);
         if(error!=null) {
-            request.setAttribute("error_msg", error);
-            dispatcher.forward(request,response);
+            ServletContext servletContext = request.getServletContext();
+            final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
+            ctx.setVariable("error_msg",error);
+            templateEngine.process(path,ctx,response.getWriter());
         } else {
-            request.setAttribute("product_id",new_product.getIdProduct());
-            dispatcher.forward(request,response);
+            response.sendRedirect(path);
         }
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
