@@ -55,7 +55,7 @@ public class GetProductAndReviews extends HttpServlet {
             reviews = p.getReviews();
         }
 
-        String path = "/WEB-INF/Home.jsp";
+        String path = "/WEB-INF/Home.html";
         ServletContext servletContext = request.getServletContext();
         final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
 

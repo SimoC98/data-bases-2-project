@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../css/myStyle.css" th:href="@{/css/mystyle.css}" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../css/bootstrap.css" th:href="@{/css/bootstrap.css}" />
+</head>
+<body>
+    <p class="h2 text-center">Home</p>
+    <p th:text="${product.getName()}"></p>
+    <div class="row">
+        <div class="col">
+            <img th:src="${'data:image/png;base64,'+product.getImage()}" alt=""/>
+        </div>
+        <div class="col">
+            <p th:text="${product.getDescription()}"></p>
+            <div class="row">
+                <p class="col font-weight-bold">Price:</p>
+                <p class="col" th:text="${product.getPrice()}"></p>
+            </div>
+            <div class="row">
+                <p class="col font-weight-bold">Date:</p>
+                <p class="col" th:text="${product.getDate()}"></p>
+            </div>
+        </div>
+    </div>
+    <div th:unless="${reviews.isEmpty()}"></div>
+        <div th:each="r: ${reviews}">
+            <p th:text="${r.getReviewText()}"></p>
+            <p th:text="${r.getUser()}" class="text-right text-dark font-italic"></p>
+        </div>
+        <div th:if="${reviews.isEmpty()}">
+            <p class="text-dark text-center">There are no Review!</p>
+        </div>
+</body>
+</html>

@@ -62,7 +62,7 @@ public class RegisterUser extends HttpServlet {
             return;
         }
 
-        String path = "index.jsp";
+        String path = "index.html";
         if(error!=null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             request.setAttribute("error_msg",error);
