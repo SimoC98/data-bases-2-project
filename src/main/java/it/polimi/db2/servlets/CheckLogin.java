@@ -61,7 +61,7 @@ public class CheckLogin extends HttpServlet {
         //jstl operations for forward commented
         String path = null;
         if(user==null) {
-            path = "index.jsp";
+            path = "index.html";
             ServletContext servletContext = request.getServletContext();
             final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
             ctx.setVariable("error_msg","Wrong credentials... please try again or register");
