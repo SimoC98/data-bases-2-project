@@ -43,9 +43,6 @@ public class CheckLogin extends HttpServlet {
         String username = null;
         String password = null;
 
-        System.out.println("ciao sono qui");
-
-
         username = StringEscapeUtils.escapeJava(request.getParameter("username"));
         password = StringEscapeUtils.escapeJava(request.getParameter("password"));
 

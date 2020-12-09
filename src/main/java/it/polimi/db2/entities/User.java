@@ -1,6 +1,7 @@
 package it.polimi.db2.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -8,7 +9,7 @@ import java.util.*;
 @NamedQueries({@NamedQuery(name = "User.findUserByUsername", query = "select u from User u where u.username = :username"),
         @NamedQuery(name = "User.findUserByEmail", query="select u from User u where u.email = :email"),
         @NamedQuery(name = "User.findUserByCredentials", query = "select u from User u where u.username=:username and u.password=:password")})
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

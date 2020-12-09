@@ -52,11 +52,11 @@ public class QuestionService {
         for (Question q : dynamicQuestions) {
             em.remove(q);
         }
-
+/*
         for (Question q : fixedQuestions) {
             List<Answer> answers = new ArrayList<Answer>(q.getAnswers());
             answers.stream().filter(answer -> answer.getCompilation().getProduct().getIdProduct().equals(idProduct)).forEach(answer -> q.getAnswers().remove(answer));
-        }
+        }*/
         p.removeQuestions();
 
     }

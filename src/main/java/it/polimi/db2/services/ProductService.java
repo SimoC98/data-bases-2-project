@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Stateless
 public class ProductService {
@@ -27,9 +28,9 @@ public class ProductService {
     }
 
     public Product findProductByDate(LocalDate date) {
-        Product p = null;
-        p = em.createNamedQuery("Product.findByDate",Product.class).setParameter("date",date).getSingleResult();
-        return p;
+        List<Product> p = em.createNamedQuery("Product.findByDate",Product.class).setParameter("date",date).getResultList();
+        if(p.isEmpty()) return null;
+        else return p.get(0);
     }
 
     public Product findProductById(int id) {
