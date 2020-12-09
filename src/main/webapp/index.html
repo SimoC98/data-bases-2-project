@@ -10,7 +10,9 @@
     <h1 class="title text-center p-3">Gamified Marketing App</h1>
     <div class="d-flex justify-content-center">
         <div id="login" class="align-middle w-25 pt-5">
-            <form th:action="@{/login}" method="POST">
+            <p th:text=" ${error_msg}" class="text-danger font-weight-bold text-center"></p>
+
+            <form action="login" method="POST">
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input type="text" class="form-control" id="username" name="username" required>
@@ -20,12 +22,11 @@
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <input class="btn btn-primary w-100" type="submit" value="Login">
-                <!-- <p th:text=" ${errorMsg}"></p> -->
             </form>
             <button onclick="show()" class="btn btn-light w-100" role="button">Register</button>
         </div>
         <div id="registration" class="align-middle w-25 pt-5"  style="display: none;">
-            <form th:action="@{/register}" method="POST">
+            <form action="register" method="POST">
                 <div class="form-group">
                     <label for="user">Username:</label>
                     <input type="text" class="form-control" id="user" required name="user">
