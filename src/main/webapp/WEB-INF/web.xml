@@ -12,7 +12,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/hello</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>ConnectionTester</servlet-name>
@@ -69,6 +69,14 @@
     <servlet-mapping>
         <servlet-name>GetStaticProductQuestionnaire</servlet-name>
         <url-pattern>/getStaticProductQuestionnaire</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CheckLogin</servlet-name>
+        <servlet-class>it.polimi.db2.servlets.CheckLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckLogin</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>RegisterUser</servlet-name>
