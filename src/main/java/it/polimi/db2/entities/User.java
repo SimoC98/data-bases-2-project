@@ -1,6 +1,5 @@
 package it.polimi.db2.entities;
 
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -32,7 +31,6 @@ public class User {
 
     @OneToMany(fetch=FetchType.LAZY,mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> reviews;
-
 
     public boolean isBlocked() {
         return blocked;

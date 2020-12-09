@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "CheckLogin")
+@MultipartConfig
 public class CheckLogin extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @EJB(name = "it.polimi.db2.services/UserService")
@@ -41,6 +43,9 @@ public class CheckLogin extends HttpServlet {
         String username = null;
         String password = null;
 
+        System.out.println("ciao sono qui");
+
+
         username = StringEscapeUtils.escapeJava(request.getParameter("username"));
         password = StringEscapeUtils.escapeJava(request.getParameter("password"));
 
@@ -52,6 +57,7 @@ public class CheckLogin extends HttpServlet {
         User user = null;
         try {
             user = userService.checkCredentials(username,password);
+            System.out.println(user);
         } catch (InvalidCredentialsException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
@@ -71,7 +77,7 @@ public class CheckLogin extends HttpServlet {
             //dispatcher.forward(request,response);
         } else {
             request.getSession().setAttribute("user",user);
-            path = "GetProductAndReviews";
+            path = "getProductReviews";
             response.sendRedirect(path);
             //RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             //dispatcher.forward(request,response);

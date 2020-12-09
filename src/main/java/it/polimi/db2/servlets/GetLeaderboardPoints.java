@@ -1,8 +1,10 @@
 package it.polimi.db2.servlets;
 
 import it.polimi.db2.entities.Compilation;
+import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.User;
 import it.polimi.db2.services.CompilationService;
+import it.polimi.db2.services.ProductService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -17,6 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 /*
@@ -29,6 +33,8 @@ both lists are ordered according to points
 public class GetLeaderboardPoints extends HttpServlet {
     @EJB(name = "it.polimi.db2.services/CompilationService")
     private CompilationService compilationService;
+    @EJB(name = "it.polimi.db2.services/ProductService")
+    private ProductService productService;
     private TemplateEngine templateEngine;
 
     @Override
@@ -42,18 +48,19 @@ public class GetLeaderboardPoints extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer productId = null;
+        ZoneId zoneId = ZoneId.of("Europe/Rome");
+        LocalDate today = LocalDate.now(zoneId);
 
-        try {
-            productId = Integer.parseInt(request.getParameter("product_id"));
-        } catch (NullPointerException | NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
+        Product product = productService.findProductByDate(today);
+
+        if(product==null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"There is no product today");
             return;
         }
 
         List<Compilation> compilations = null;
         try {
-            compilationService.getOrderedCompilations(productId);
+            compilationService.getOrderedCompilations(product.getIdProduct());
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to retrieve leaderboard informations");
             return;

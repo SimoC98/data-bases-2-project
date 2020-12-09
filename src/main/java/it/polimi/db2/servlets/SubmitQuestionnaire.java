@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 @WebServlet(name = "SubmitQuestionnaire")
 public class SubmitQuestionnaire extends HttpServlet {
@@ -49,27 +51,24 @@ public class SubmitQuestionnaire extends HttpServlet {
         Buttons of front had should have name="action" and value="submit" or "delete"
          */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer productId = null;
-        Product product = null;
-        Timestamp log = null;
+        ZoneId zoneId = ZoneId.of("Europe/Rome");
+        LocalDate today = LocalDate.now(zoneId);
+        Product product;
+        Timestamp log;
         User u = (User) request.getSession().getAttribute("user");
-        boolean badRequest = false;
-        try {
-            productId = Integer.parseInt(request.getParameter("product_id"));
-            product = productService.findProductById(productId);
-        } catch (NumberFormatException | NullPointerException e)   {
-            badRequest = true;
-        }
 
-        if(badRequest || product==null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
+        product = productService.findProductByDate(today);
+
+        if(product==null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"There is no product today");
+            return;
         }
 
         log = new Timestamp(System.currentTimeMillis());
 
         Compilation newCompilation = null;
         try {
-            newCompilation = compilationService.createCompilation(u.getId(),productId,log);
+            newCompilation = compilationService.createCompilation(u.getId(),product.getIdProduct(),log);
         } catch (CompilationAlreadyExistingException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
