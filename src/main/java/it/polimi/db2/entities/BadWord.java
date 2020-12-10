@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "bad_word")
 public class BadWord {
     @Id
-    @Column(name = "id_bad_word")
+    @Column(name = "bad_word_id")
     private Integer idBadWord;
 
     @Column(name = "bad_word")

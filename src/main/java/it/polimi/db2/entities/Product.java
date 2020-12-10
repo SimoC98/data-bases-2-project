@@ -15,7 +15,7 @@ import java.util.List;
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
+    @Column(name = "product_id")
     private Integer idProduct;
 
     @Column(name = "name")

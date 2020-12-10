@@ -7,16 +7,16 @@ import java.io.Serializable;
 @Table(name = "review")
 public class Review implements Serializable {
     @Id
-    @Column(name = "id_review")
+    @Column(name = "review_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idReview;
 
     @ManyToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "id_product")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Column(name = "review_text")

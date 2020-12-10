@@ -34,16 +34,10 @@ public class CompilationService {
     }
 
     //TODO WITH TRIGGERS
-    public Compilation addPointsToCompilation(List<Answer> answers){
-        int totalPoints = 0;
-        Compilation c = null;
-        for (Answer a :answers) {
-            //totalPoints += a.getQuestion().getType();
-        }
-        c.setPoints(totalPoints);
-        em.merge(c);
-        return c;
-    }
+    /*
+    public Compilation addPointsToCompilation(){
+
+    }*/
 
     public void deleteCompilationByProductId(Integer idProduct){
         List<Compilation> compilationsToDelete = em.createNamedQuery("Compilation.findByProductId",Compilation.class).setParameter("idProduct",idProduct).getResultList();

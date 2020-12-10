@@ -3,7 +3,6 @@ package it.polimi.db2.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "question")
@@ -16,14 +15,14 @@ import java.util.Map;
 public class Question implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_question")
+    @Column(name = "question_id")
     private Integer idQuestion;
 
     /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
     private List<Answer> answers;*/
 
     @ManyToMany
-    @JoinTable(name = "answer", joinColumns = @JoinColumn(name = "id_question"), inverseJoinColumns = @JoinColumn(name = "id_compilation"))
+    @JoinTable(name = "answer", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "compilation_id"))
     private List<Compilation> compilations;
 
     @ManyToOne

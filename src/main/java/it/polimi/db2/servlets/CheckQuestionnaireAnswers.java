@@ -1,7 +1,6 @@
 package it.polimi.db2.servlets;
 
 import it.polimi.db2.entities.Compilation;
-import it.polimi.db2.services.AnswerService;
 import it.polimi.db2.services.CompilationService;
 
 import javax.ejb.EJB;
@@ -18,14 +17,13 @@ import java.util.List;
 @WebServlet(name = "CheckQuestionnaireAnswers")
 public class CheckQuestionnaireAnswers extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    @EJB(name = "it.polimi.db2.services/AnswerService")
-    private AnswerService answerService;
+
     @EJB(name = "it.polimi.db2.services/CompilationService")
     private CompilationService compilationService;
 
     //TODO: alternative options?
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Compilation compilation = (Compilation) request.getAttribute("compilation");
+        /*Compilation compilation = (Compilation) request.getAttribute("compilation");
 
         if(compilation==null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
@@ -50,7 +48,7 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
 
 
             }
-        }
+        }*/
 
 
 

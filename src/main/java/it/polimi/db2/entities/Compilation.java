@@ -3,7 +3,6 @@ package it.polimi.db2.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -19,15 +18,15 @@ public class Compilation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_compilation")
+    @Column(name = "compilation_id")
     private Integer idCompilation;
 
     @ManyToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "id_product")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Column(name = "deleted")
@@ -39,15 +38,10 @@ public class Compilation implements Serializable {
     @Column(name = "points")
     private Integer points;
 
-    /*
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "compilation", cascade = CascadeType.ALL)
-    private List<Answer> answers;*/
-
-
     //map many to many rel with question with a map
     @ElementCollection
-    @CollectionTable(name = "answer", joinColumns = @JoinColumn(name = "id_compilation"))
-    @MapKeyJoinColumn(name = "id_question")
+    @CollectionTable(name = "answer", joinColumns = @JoinColumn(name = "compilation_id"))
+    @MapKeyJoinColumn(name = "question_id")
     @Column(name = "answer_text")
     private Map<Question,String> answersQuestions;
 

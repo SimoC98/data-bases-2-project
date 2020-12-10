@@ -4,7 +4,6 @@ import it.polimi.db2.entities.Compilation;
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.User;
 import it.polimi.db2.exception.CompilationAlreadyExistingException;
-import it.polimi.db2.services.AnswerService;
 import it.polimi.db2.services.CompilationService;
 import it.polimi.db2.services.ProductService;
 import org.thymeleaf.TemplateEngine;
@@ -13,7 +12,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

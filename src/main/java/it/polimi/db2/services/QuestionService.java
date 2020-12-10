@@ -1,6 +1,5 @@
 package it.polimi.db2.services;
 
-import it.polimi.db2.entities.Answer;
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.Question;
 import it.polimi.db2.entities.QuestionType;
@@ -8,7 +7,6 @@ import it.polimi.db2.entities.QuestionType;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
