@@ -3,6 +3,7 @@ package it.polimi.db2.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "question")
@@ -18,8 +19,12 @@ public class Question implements Serializable {
     @Column(name = "id_question")
     private Integer idQuestion;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
-    private List<Answer> answers;
+    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
+    private List<Answer> answers;*/
+
+    @ManyToMany
+    @JoinTable(name = "answer", joinColumns = @JoinColumn(name = "id_question"), inverseJoinColumns = @JoinColumn(name = "id_compilation"))
+    private List<Compilation> compilations;
 
     @ManyToOne
     @JoinColumn(name = "product")
@@ -46,9 +51,9 @@ public class Question implements Serializable {
         this.idQuestion = idQuestion;
     }
 
-    public List<Answer> getAnswers(){
+    /*public List<Answer> getAnswers(){
         return this.answers;
-    }
+    }*/
 
     public Product getProduct() {
         return product;
@@ -74,13 +79,16 @@ public class Question implements Serializable {
         this.type = type;
     }
 
-    public void addAnswer(Answer answer){
+   /* public void addAnswer(Answer answer){
         getAnswers().add(answer);
         answer.setQuestion(this);
-        //TODO check bad-words
     }
 
     public void deleteAnswer(Answer answer){
         getAnswers().remove(answer);
+    }*/
+
+    public List<Compilation> getCompilations() {
+        return compilations;
     }
 }

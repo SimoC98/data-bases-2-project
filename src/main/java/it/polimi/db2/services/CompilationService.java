@@ -1,15 +1,13 @@
 package it.polimi.db2.services;
 
 
-import it.polimi.db2.entities.Answer;
-import it.polimi.db2.entities.Compilation;
-import it.polimi.db2.entities.Product;
-import it.polimi.db2.entities.User;
+import it.polimi.db2.entities.*;
 import it.polimi.db2.exception.CompilationAlreadyExistingException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -23,11 +21,11 @@ public class CompilationService {
     }
 
     public Compilation createCompilation(Integer idUser, Integer idProduct, Timestamp log) throws CompilationAlreadyExistingException {
-        if (em.createNamedQuery("Compilation.findByUser&ProductId").setParameter("idUser",idUser).setParameter("idProduct",idProduct).getSingleResult() != null) {
+        if (em.createNamedQuery("Compilation.findByUser&ProductId").setParameter("idUser",idUser).setParameter("idProduct",idProduct).getResultList().size()==0) {
             throw new CompilationAlreadyExistingException("A compilation is already created for this user!");
         }
-        User user = (User) em.find(User.class, idUser);
-        Product product = (Product) em.find(Product.class, idProduct);
+        User user = em.find(User.class, idUser);
+        Product product = em.find(Product.class, idProduct);
         Compilation compilation = new Compilation(user, product, log);
         user.addCompilation(compilation);
         product.addCompilation(compilation);
@@ -67,5 +65,13 @@ public class CompilationService {
         return compilations;
     }
 
+    //methods to test many to many rel between compilation and question
+    public void createAnswer(List<Integer> questionsId,List<String> answerText,int compilation) {
+        Compilation c = em.find(Compilation.class,compilation);
+        for(int i=0;i<questionsId.size();i++) {
+            Question q = em.find(Question.class,questionsId.get(i));
+            c.addAnswerQuestion(q,answerText.get(i));
+        }
+    }
 
 }

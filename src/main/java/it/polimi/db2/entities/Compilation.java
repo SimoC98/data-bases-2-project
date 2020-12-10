@@ -4,14 +4,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "compilation")
 @NamedQueries({
         @NamedQuery(name = "Compilation.findByProductId", query = "SELECT c FROM Compilation c WHERE c.product.idProduct = :idProduct"),
         @NamedQuery(name = "Compilation.findByUserId", query = "SELECT c FROM Compilation c WHERE c.user.id = :idUser"),
-        @NamedQuery(name = "Compilation.findByUser&ProductId", query = "SELECT c FROM Compilation c WHERE c.user = :idUser AND c.product = :idProduct"),
-        @NamedQuery(name = "Compilation.getOrderedCompilation", query = "SELECT c FROM Compilation c WHERE c.product = :idProduct order by c.points desc")
+        @NamedQuery(name = "Compilation.findByUser&ProductId", query = "SELECT c FROM Compilation c WHERE c.user.id = :idUser AND c.product.idProduct = :idProduct"),
+        @NamedQuery(name = "Compilation.getOrderedCompilation", query = "SELECT c FROM Compilation c WHERE c.product.idProduct = :idProduct order by c.points desc")
 })
 public class Compilation implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -38,8 +39,17 @@ public class Compilation implements Serializable {
     @Column(name = "points")
     private Integer points;
 
+    /*
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "compilation", cascade = CascadeType.ALL)
-    private List<Answer> answers;
+    private List<Answer> answers;*/
+
+
+    //map many to many rel with question with a map
+    @ElementCollection
+    @CollectionTable(name = "answer", joinColumns = @JoinColumn(name = "id_compilation"))
+    @MapKeyJoinColumn(name = "id_question")
+    @Column(name = "answer_text")
+    private Map<Question,String> answersQuestions;
 
     public Compilation(){}
 
@@ -78,6 +88,7 @@ public class Compilation implements Serializable {
         this.product = product;
     }
 
+    /*
     public List<Answer> getAnswers() {
         return answers;
     }
@@ -93,7 +104,7 @@ public class Compilation implements Serializable {
 
     public void removeAnswer(Answer a) {
         getAnswers().remove(a);
-    }
+    }*/
 
     public Integer getPoints() {
         return this.points;
@@ -117,5 +128,18 @@ public class Compilation implements Serializable {
 
     public void setLog(java.sql.Timestamp log) {
         this.log = log;
+    }
+
+
+    public void addAnswerQuestion(Question q, String answer_text) {
+        answersQuestions.put(q,answer_text);
+    }
+
+    public void deleteAnswerQuestion(Question q) {
+        answersQuestions.remove(q);
+    }
+
+    public Map<Question, String> getAnswers_questions() {
+        return answersQuestions;
     }
 }
