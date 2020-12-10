@@ -9,7 +9,6 @@
         <class>it.polimi.db2.entities.User</class>
         <class>it.polimi.db2.entities.Product</class>
         <class>it.polimi.db2.entities.Question</class>
-        <class>it.polimi.db2.entities.Answer</class>
         <class>it.polimi.db2.entities.Compilation</class>
         <class>it.polimi.db2.entities.Review</class>
     </persistence-unit>
