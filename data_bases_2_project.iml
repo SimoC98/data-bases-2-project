@@ -5,7 +5,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="data_bases_2_project" value="d5e3c522-620f-4634-8528-2033cab709fa" />
+          <factory-entry name="data_bases_2_project" value="7bfa1ba0-550a-41e2-a106-c751d3a760cd" />
           <factory-entry name="default" value="8ad32ac9-20c5-49f7-ba81-89fb9232b131" />
         </datasource-mapping>
         <naming-strategy-map />

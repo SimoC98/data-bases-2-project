@@ -32,8 +32,12 @@ public class QuestionService {
     }
 
     public List<Question> findQuestionByProduct(int productId) {
-        List<Question> questions = em.createNamedQuery("Question.findByProduct", Question.class).
+        /*List<Question> questions = em.createNamedQuery("Question.findByProduct", Question.class).
                 setParameter("pId", productId).getResultList();
+        return questions;*/
+        List<Question> questions = null;
+        Product p = em.find(Product.class,productId);
+        questions = p.getQuestions();
         return questions;
     }
 
