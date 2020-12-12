@@ -84,4 +84,8 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
         ctx.setVariable("questions", questions);
         templateEngine.process(path, ctx, response.getWriter());
     }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response){
+
+    }
 }

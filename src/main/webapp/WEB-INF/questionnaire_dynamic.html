@@ -1,23 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Questionnaire</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-
 <h1 class="title text-center p-3">Questionnaire about the Product</h1>
 <div class="d-flex justify-content-center">
-    <form action="#" th:action="@{#}" method="post">
-        <div class="list-group" th:each="q : ${questions} ">
-            <div>
-                <p th:text="${q.questionText} "></p>
-                <input type="text" class="form-control" required>
+    <div id="dynamic" class="align-middle w-25 pt-5">
+
+        <form action="getDynamicProductQuestionnaire" method="post">
+            <div class="list-group" th:each="q : ${questions} ">
+                <div>
+                    <p th:text="${q.questionText} "></p>
+                    <input type="text" class="form-control" required>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+        <button onclick="show()" class="btn btn-light w-100" role="button">Next</button>
+
+    </div>
+
+    <div id="static" class="align-middle w-25 pt-5" style="display: none;">
+        <form action="#" method="post">
+            <fieldset>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="text" class="form-control" id="age" required>
+                </div>
+                <br>
+                <div class="form-group">
+                    <p>Please select your Gender:</p>
+                    <input type="radio" id="male" name="gender" value="male">
+                    <label for="male">Male</label><br>
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label><br>
+                </div>
+                <div class="form-group">
+                    <br>
+                    <p>Please select your level of Expertise:</p>
+                    <input type="radio" id="explow" name="expl" value="low">
+                    <label for="explow">low</label><br>
+                    <input type="radio" id="explmed" name="expl" value="med">
+                    <label for="explmed">med</label><br>
+                    <input type="radio" id="explhigh" name="expl" value="high">
+                    <label for="explhigh">high</label><br><br>
+                </div>
+                <input class="btn btn-primary w-100" type="submit" value="Submit">
+
+            </fieldset>
+        </form>
+        <button onclick="show()" class="btn btn-light w-100" role="button">Previous</button>
+
+    </div>
 </div>
+<script>
+    function show() {
+        var x = document.getElementById("static");
+        var y = document.getElementById("dynamic");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+        } else {
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+    }
+</script>
 </body>
 </html>
