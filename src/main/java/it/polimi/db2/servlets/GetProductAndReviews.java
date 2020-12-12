@@ -3,6 +3,7 @@ package it.polimi.db2.servlets;
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.Review;
 import it.polimi.db2.services.ProductService;
+import it.polimi.db2.services.ReviewService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -26,6 +27,8 @@ public class GetProductAndReviews extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @EJB(name = "it.polimi.db2.services/ProductService")
     private ProductService productService;
+    @EJB(name = "it.polimi.db2.services/ReviewService")
+    private ReviewService reviewService;
     private TemplateEngine templateEngine;
 
     @Override
@@ -52,7 +55,7 @@ public class GetProductAndReviews extends HttpServlet {
 
         List<Review> reviews = null;
         if(p!=null) {
-            reviews = p.getReviews();
+            reviews = reviewService.findReviewsByProduct(p.getIdProduct());
         }
 
         String path = "/WEB-INF/Home.html";

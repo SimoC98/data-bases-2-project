@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 @WebServlet(name = "CreateProduct")
+@MultipartConfig
 public class CreateProduct extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @EJB(name = "it.polimi.db2.services/ProductService")
@@ -83,21 +85,19 @@ public class CreateProduct extends HttpServlet {
             error = e.getMessage();
         }
 
-
         /*
         if error!= null send back to the INSERT page a error message that will be displayed
-        otherwise, send back to the INSERT page the id of the product just created, to let the admin insert some questions
+        otherwise, send back to the INSERT page the product just created, to let the admin insert some questions
          */
-        //todo: add path
-        String path = null;
+        String path = "/WEB-INF/createProduct.html";
+        ServletContext servletContext = request.getServletContext();
+        final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
         if(error!=null) {
-            ServletContext servletContext = request.getServletContext();
-            final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
             ctx.setVariable("error_msg",error);
-            templateEngine.process(path,ctx,response.getWriter());
         } else {
-            response.sendRedirect(path);
+            ctx.setVariable("product",newProduct);
         }
+        templateEngine.process(path,ctx,response.getWriter());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
