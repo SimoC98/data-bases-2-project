@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../css/myStyle.css" th:href="@{/css/mystyle.css}" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../css/bootstrap.css" th:href="@{/css/bootstrap.css}" />
+</head>
+<body>
+<div th:if="${product==null}">
+    <h1 class="title text-center p-3">Create a product</h1>
+    <div class="d-flex justify-content-center">
+        <form name="productForm" action="createProduct" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" name="description">
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" min="0.00" max="100000" step="0.01" class="form-control" id="price" name="price">
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" name="date">
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" name="image">
+                    <label class="custom-file-label" for="image">Choose file</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div th:if="${error_msg!=null}">
+            <p th:text="${error_msg}" class="text-danger font-weight-bold text-center"></p>
+        </div>
+    </div>
+</div>
+<div th:unless="${product==null}">
+    <h1 class="title text-center p-3">Create questions</h1>
+    <div class="d-flex justify-content-center">
+        <div id="login" class="align-middle w-25 pt-5">
+            <form name="questionForm" action="createProductQuestions" method="post">
+                <div id="first" class="mb-3">
+                    <input type="text" placeholder="create a question for this product" class="form-control" id="question0" name="question">
+                </div>
+                <input class="btn btn-primary w-100" type="submit" value="add_question">
+            </form>
+            <button onclick="addQuestion()" class="btn btn-light w-100" role="button">+</button>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd = '0'+dd;
+    }
+    if (mm<10) {
+        mm = '0'+mm;
+    }
+    today = yyyy+'-'+mm+'-'+dd;
+    document.forms.productForm.elements.date.min= today;
+
+    var cont=1;
+
+    function addQuestion() {
+        var form = document.getElementById("first");
+        var input = document.createElement("input");
+        input.setAttribute("class","form-control");
+        let id = 'question'+cont;
+        input.setAttribute("id",id);
+        input.setAttribute("name","question");
+        cont++;
+        input.setAttribute("placeholder","create a question for this product")
+        form.appendChild(input);
+
+    }
+</script>
+
+
+
+</body>
+</html>
