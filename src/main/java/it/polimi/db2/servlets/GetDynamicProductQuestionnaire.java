@@ -2,6 +2,7 @@ package it.polimi.db2.servlets;
 
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.Question;
+import it.polimi.db2.exception.ProductAlreadyExistingException;
 import it.polimi.db2.services.ProductService;
 import it.polimi.db2.services.QuestionService;
 import org.thymeleaf.TemplateEngine;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /*
+
         Integer productId = null;
         boolean badRequest = false;
         try {
@@ -58,26 +61,8 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
         }
 
-        List<Question> questions = p.getQuestions();
-        List<Question> fixed_questions = null;
-        try  {
-            fixed_questions = questionService.findFixedQuestion();
-        } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not possible to find fixed questions for this product");
-        }
+        List<Question> questions = questionService.findQuestionByProduct(productId);
 
-        questions.addAll(fixed_questions);
-
-        */
-
-        //todo: add path
-        List<Question> questions = new LinkedList<>();
-        Question question = new Question();
-        Question question1 = new Question();
-        question.setQuestionText("CIAO");
-        question1.setQuestionText("AGGIUNTO");
-        questions.add(question);
-        questions.add(question1);
         String path = "/WEB-INF/questionnaire_dynamic.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -85,7 +70,5 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
         templateEngine.process(path, ctx, response.getWriter());
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
 
-    }
 }

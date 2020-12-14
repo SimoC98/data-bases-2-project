@@ -20,13 +20,14 @@ public class CompilationService {
     public CompilationService() {
     }
 
-    public Compilation createCompilation(Integer idUser, Integer idProduct, Timestamp log) throws CompilationAlreadyExistingException {
-        if (em.createNamedQuery("Compilation.findByUser&ProductId").setParameter("idUser",idUser).setParameter("idProduct",idProduct).getResultList().size()==0) {
+    public Compilation createCompilation(Integer idUser, Integer idProduct, Timestamp log,int deleted) throws CompilationAlreadyExistingException {
+        /*if (em.createNamedQuery("Compilation.findByUser&ProductId").setParameter("idUser",idUser).setParameter("idProduct",idProduct).getResultList().size()==0) {
             throw new CompilationAlreadyExistingException("A compilation is already created for this user!");
-        }
+        }*/
         User user = em.find(User.class, idUser);
         Product product = em.find(Product.class, idProduct);
         Compilation compilation = new Compilation(user, product, log);
+        compilation.setDeleted(deleted);
         user.addCompilation(compilation);
         product.addCompilation(compilation);
         em.persist(compilation);

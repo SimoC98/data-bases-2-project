@@ -12,6 +12,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,43 +54,39 @@ public class SubmitQuestionnaire extends HttpServlet {
         LocalDate today = LocalDate.now(zoneId);
         Product product;
         Timestamp log;
+        String path = "checkQuestionnaireAnswers";
         User u = (User) request.getSession().getAttribute("user");
 
         product = productService.findProductByDate(today);
 
-        if(product==null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"There is no product today");
+        if (product == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "There is no product today");
             return;
         }
 
         log = new Timestamp(System.currentTimeMillis());
 
         Compilation newCompilation = null;
+        String action = request.getParameter("action");
+        int deleted = 0;
+        if (action.equalsIgnoreCase("Cancel")) {
+            deleted = 1;
+        }
         try {
-            newCompilation = compilationService.createCompilation(u.getId(),product.getIdProduct(),log);
+            newCompilation = compilationService.createCompilation(u.getId(), product.getIdProduct(), log, deleted);
+
         } catch (CompilationAlreadyExistingException e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
             return;
         } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to create a compilation");
-            return;
-        }
-        String action = request.getParameter("action");
-        String path = null;
-        request.setAttribute("compilation",newCompilation);
-        if(action.equalsIgnoreCase("submit")) {
-            path = "CheckQuestionnaireAnswers";
-        } else if(action.equalsIgnoreCase("delete")) {
-            path = "DeleteQuestionnaire";
-        } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect param values");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to create a compilation");
             return;
         }
 
-        ServletContext servletContext = request.getServletContext();
-        final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
-        templateEngine.process(path,ctx,response.getWriter());
+        request.setAttribute("compilation", newCompilation);
+        RequestDispatcher rd = request.getRequestDispatcher(path);
+        rd.forward(request, response);
     }
 
 

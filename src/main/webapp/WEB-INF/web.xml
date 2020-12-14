@@ -28,7 +28,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CheckQuestionnaireAnswers</servlet-name>
-        <url-pattern>/compiledQuestionnaire</url-pattern>
+        <url-pattern>/checkQuestionnaireAnswers</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>CreateProduct</servlet-name>
@@ -92,7 +92,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>DeleteQuestionnaire</servlet-name>
-        <url-pattern>/DeleteQuestionnaire</url-pattern>
+        <url-pattern>/deleteQuestionnaire</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>GetLeaderboardPoints</servlet-name>
@@ -109,5 +109,13 @@
     <servlet-mapping>
         <servlet-name>CreateProductQuestions</servlet-name>
         <url-pattern>/createProductQuestions</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SubmitQuestionnaire</servlet-name>
+        <servlet-class>it.polimi.db2.servlets.SubmitQuestionnaire</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubmitQuestionnaire</servlet-name>
+        <url-pattern>/submitQuestionnaire</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -30,7 +30,7 @@ public class Compilation implements Serializable {
     private Product product;
 
     @Column(name = "deleted")
-    private Boolean deleted;
+    private int deleted;
 
     @Column(name = "log")
     private java.sql.Timestamp log;
@@ -58,7 +58,7 @@ public class Compilation implements Serializable {
         this.points += points;
     }
 
-    public Boolean getDeleted() {
+    public int getDeleted() {
         return deleted;
     }
 
@@ -108,11 +108,11 @@ public class Compilation implements Serializable {
         this.points = points;
     }
 
-    public Boolean isDeleted() {
+    public int isDeleted() {
         return this.deleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(int deleted) {
         this.deleted = deleted;
     }
 
@@ -133,7 +133,12 @@ public class Compilation implements Serializable {
         answersQuestions.remove(q);
     }
 
-    public Map<Question, String> getAnswers_questions() {
+    public Map<Question, String> getAnswersQuestions() {
         return answersQuestions;
     }
+
+    public Integer getIdCompilation() {
+        return idCompilation;
+    }
+
 }
