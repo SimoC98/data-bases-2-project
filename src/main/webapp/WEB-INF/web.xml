@@ -102,4 +102,12 @@
         <servlet-name>GetLeaderboardPoints</servlet-name>
         <url-pattern>/GetLeaderboardPoints</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CreateProductQuestions</servlet-name>
+        <servlet-class>it.polimi.db2.servlets.CreateProductQuestions</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateProductQuestions</servlet-name>
+        <url-pattern>/createProductQuestions</url-pattern>
+    </servlet-mapping>
 </web-app>
