@@ -63,14 +63,6 @@
         <url-pattern>/getDynamicProductQuestionnaire</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>GetStaticProductQuestionnaire</servlet-name>
-        <servlet-class>it.polimi.db2.servlets.GetStaticProductQuestionnaire</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>GetStaticProductQuestionnaire</servlet-name>
-        <url-pattern>/getStaticProductQuestionnaire</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>CheckLogin</servlet-name>
         <servlet-class>it.polimi.db2.servlets.CheckLogin</servlet-class>
     </servlet>
