@@ -71,6 +71,7 @@ public class SubmitQuestionnaire extends HttpServlet {
         int deleted = 0;
         if (action.equalsIgnoreCase("Cancel")) {
             deleted = 1;
+            path = "/WEB-INF/deletedCompilation.html";
         }
         try {
             newCompilation = compilationService.createCompilation(u.getId(), product.getIdProduct(), log, deleted);
@@ -83,10 +84,17 @@ public class SubmitQuestionnaire extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to create a compilation");
             return;
         }
+        if (action.equalsIgnoreCase("Cancel")) {
+            ServletContext servletContext = getServletContext();
+            final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+            templateEngine.process(path, ctx, response.getWriter());
+        } else {
+            request.setAttribute("compilation", newCompilation);
+            RequestDispatcher rd = request.getRequestDispatcher(path);
+            rd.forward(request, response);
+        }
 
-        request.setAttribute("compilation", newCompilation);
-        RequestDispatcher rd = request.getRequestDispatcher(path);
-        rd.forward(request, response);
+
     }
 
 
