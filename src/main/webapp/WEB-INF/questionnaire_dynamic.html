@@ -14,7 +14,7 @@
         <div id="dynamic">
             <div class="list-group" th:each="q : ${questions} ">
                 <p th:text="${q.questionText} "></p>
-                <input type="text" class="form-control" required>
+                <input type="text" class="form-control" th:name="${q.idQuestion}" required>
             </div>
             <br>
             <button onclick="show()" class="btn btn-light w-100" role="button" type="button" >Next</button>
@@ -23,24 +23,24 @@
         <div id="static" style="display: none;">
             <div class="form-group">
                 <label for="age">Age:</label>
-                <input type="text" class="form-control" id="age" required>
+                <input type="text" class="form-control" id="age" name="1" required>
             </div>
             <br>
             <div class="form-group">
                 <p>Please select your Gender:</p>
-                <input type="radio" id="male" name="gender" value="male">
+                <input type="radio" id="male" name="2" value="male">
                 <label for="male">Male</label><br>
-                <input type="radio" id="female" name="gender" value="female">
+                <input type="radio" id="female" name="2" value="female">
                 <label for="female">Female</label><br>
             </div>
             <div class="form-group">
                 <br>
                 <p>Please select your level of Expertise:</p>
-                <input type="radio" id="explow" name="expl" value="low">
+                <input type="radio" id="explow" name="3" value="low">
                 <label for="explow">low</label><br>
-                <input type="radio" id="explmed" name="expl" value="med">
+                <input type="radio" id="explmed" name="3" value="med">
                 <label for="explmed">med</label><br>
-                <input type="radio" id="explhigh" name="expl" value="high">
+                <input type="radio" id="explhigh" name="3" value="high">
                 <label for="explhigh">high</label><br><br>
             </div>
             <button onclick="show()" class="btn btn-light w-100" role="button" type="button">Previous</button>
