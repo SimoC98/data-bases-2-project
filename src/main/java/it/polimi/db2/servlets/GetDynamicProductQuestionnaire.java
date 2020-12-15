@@ -43,25 +43,6 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-/*
-        Integer productId = null;
-        boolean badRequest = false;
-        try {
-            productId = Integer.parseInt(request.getParameter("product_id"));
-        } catch (NumberFormatException | NullPointerException e) {
-            badRequest = true;
-        }
-
-        Product p = null;
-        try {
-            p = productService.findProductById(productId);
-        } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Not possible to find this product");
-        }
-
-        if (badRequest || p == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
-        }*/
 
         ZoneId zoneId = ZoneId.of("Europe/Rome");
         LocalDate today = LocalDate.now(zoneId);
@@ -71,12 +52,12 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
             p = productService.findProductByDate(today);
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Product not found");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Product not found");
             return;
         }
 
-        if(p == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"There is not product today");
+        if (p == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "There is not product today");
             return;
         }
 

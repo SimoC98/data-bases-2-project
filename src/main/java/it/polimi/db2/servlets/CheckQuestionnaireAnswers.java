@@ -43,20 +43,21 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
         User u = (User) request.getSession().getAttribute("user");
 
 
-        if(compilation==null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
+        if (compilation == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+            return;
         }
 
         List<Integer> questions = new ArrayList<>();
         List<String> answers = new ArrayList<>();
         Enumeration<String> params = request.getParameterNames();
-        while(params.hasMoreElements()) {
+        while (params.hasMoreElements()) {
             String par = params.nextElement();
-            if(!par.equals("product_id") && !par.equals("action")) {
+            if (!par.equals("product_id") && !par.equals("action")) {
                 Integer questionId = null;
                 try {
                     questionId = Integer.parseInt(par);
-                } catch(NumberFormatException | NullPointerException e) {
+                } catch (NumberFormatException | NullPointerException e) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
                     return;
                 }
@@ -64,16 +65,14 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
                 questions.add(questionId);
                 answers.add(answerText);
                 //TODO: the transaction has to be rolled back if an answer contains bad words --> all answers added oj the same transaction? Bad word checked in the same transaction?
-                try{
-                    compilationService.createAnswer(questions,answers,compilation.getIdCompilation());
+                try {
+                    compilationService.createAnswer(questions, answers, compilation.getIdCompilation());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
         }
-
-
 
 
     }
