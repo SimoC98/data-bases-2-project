@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "bad_word")
+@NamedQuery(name = "BadWord.checkBadWords", query = "select b from BadWord b")
 public class BadWord {
     @Id
     @Column(name = "bad_word_id")

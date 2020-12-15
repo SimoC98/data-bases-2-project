@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+/*
         Integer productId = null;
         boolean badRequest = false;
         try {
@@ -60,9 +61,26 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
 
         if (badRequest || p == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+        }*/
+
+        ZoneId zoneId = ZoneId.of("Europe/Rome");
+        LocalDate today = LocalDate.now(zoneId);
+
+        Product p = null;
+        try {
+            p = productService.findProductByDate(today);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Product not found");
+            return;
         }
 
-        List<Question> questions = questionService.findQuestionByProduct(productId);
+        if(p == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"There is not product today");
+            return;
+        }
+
+        List<Question> questions = questionService.findQuestionByProduct(p.getIdProduct());
 
         String path = "/WEB-INF/questionnaire_dynamic.html";
         ServletContext servletContext = getServletContext();

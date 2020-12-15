@@ -82,24 +82,6 @@ public class Compilation implements Serializable {
         this.product = product;
     }
 
-    /*
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
-
-    public void addAnswer(Answer a) {
-        getAnswers().add(a);
-        a.setCompilation(this);
-    }
-
-    public void removeAnswer(Answer a) {
-        getAnswers().remove(a);
-    }*/
-
     public Integer getPoints() {
         return this.points;
     }

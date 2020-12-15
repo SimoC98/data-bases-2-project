@@ -1,6 +1,7 @@
 package it.polimi.db2.servlets;
 
 import it.polimi.db2.entities.Compilation;
+import it.polimi.db2.entities.User;
 import it.polimi.db2.services.CompilationService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -39,6 +40,8 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
     //TODO: alternative options?
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Compilation compilation = (Compilation) request.getAttribute("compilation");
+        User u = (User) request.getSession().getAttribute("user");
+
 
         if(compilation==null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
@@ -55,12 +58,17 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
                     questionId = Integer.parseInt(par);
                 } catch(NumberFormatException | NullPointerException e) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+                    return;
                 }
                 String answerText = request.getParameter(par);
                 questions.add(questionId);
                 answers.add(answerText);
                 //TODO: the transaction has to be rolled back if an answer contains bad words --> all answers added oj the same transaction? Bad word checked in the same transaction?
-                compilationService.createAnswer(questions,answers,compilation.getIdCompilation());
+                try{
+                    compilationService.createAnswer(questions,answers,compilation.getIdCompilation());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         }

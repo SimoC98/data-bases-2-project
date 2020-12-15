@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class CompilationService {
     }
 
     public Compilation createCompilation(Integer idUser, Integer idProduct, Timestamp log,int deleted) throws CompilationAlreadyExistingException {
-        /*if (em.createNamedQuery("Compilation.findByUser&ProductId").setParameter("idUser",idUser).setParameter("idProduct",idProduct).getResultList().size()==0) {
+        if (em.createNamedQuery("Compilation.findByUser&ProductId").setParameter("idUser",idUser).setParameter("idProduct",idProduct).getResultList().size()>0) {
             throw new CompilationAlreadyExistingException("A compilation is already created for this user!");
-        }*/
+        }
         User user = em.find(User.class, idUser);
         Product product = em.find(Product.class, idProduct);
         Compilation compilation = new Compilation(user, product, log);
@@ -56,17 +57,36 @@ public class CompilationService {
     }
 
     public List<Compilation> getOrderedCompilations(int productId) {
-        List<Compilation> compilations = em.createNamedQuery("Compilation.getOrderedCompilation",Compilation.class).setParameter("idProduct",productId).getResultList();
+        List<Compilation> compilations = em.createNamedQuery("Compilation.getOrderedCompilation",Compilation.class).setParameter("idProduct",productId).setHint("javax.persistence.cache.storeMode ", "REFRESH").getResultList();
         return compilations;
     }
 
     //methods to test many to many rel between compilation and question
     public void createAnswer(List<Integer> questionsId,List<String> answerText,int compilation) {
+        for(String s : answerText) {
+            checkBadWords(s);
+        }
+
         Compilation c = em.find(Compilation.class,compilation);
         for(int i=0;i<questionsId.size();i++) {
             Question q = em.find(Question.class,questionsId.get(i));
-            c.addAnswerQuestion(q,answerText.get(i));
+            String a = answerText.get(i);
+            /*if(q.getType().equals(QuestionType.DYNAMIC) && a.length()==0) {
+                //throw exception
+            }*/
+            if(a.length()>0) c.addAnswerQuestion(q,a);
         }
     }
 
+    public void checkBadWords(String s) {
+        /*List<BadWord> b = em.createNamedQuery("BadWord.checkBadWords",BadWord.class).getResultList();
+        List<String> w = new ArrayList<>();
+        b.stream().forEach(x -> w.add(x.getBadWord()));
+        String arr[] = s.split(" ");
+        for(int i=0;i< arr.length;i++) {
+            if (w.contains(arr[i])) {
+                System.out.println("bad word");
+            }
+        }*/
+    }
 }
