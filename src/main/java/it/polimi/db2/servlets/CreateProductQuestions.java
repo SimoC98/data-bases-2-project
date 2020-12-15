@@ -41,15 +41,13 @@ public class CreateProductQuestions extends HttpServlet {
         String[] questions = null;
         boolean badRequest = false;
         try {
-            //productId = Integer.parseInt(request.getParameter("product_id"));
-            p = productService.findProductById(22);
+            productId = Integer.parseInt(request.getParameter("product_id"));
+            System.out.println(productId);
+            p = productService.findProductById(productId);
             questions = request.getParameterValues("question");
         } catch (NumberFormatException | NullPointerException e) {
             badRequest = true;
         }
-
-        System.out.println(questions);
-        System.out.println(p);
 
         if(badRequest || p==null || questions==null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
