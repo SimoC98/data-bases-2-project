@@ -3,6 +3,7 @@ package it.polimi.db2.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,7 @@ public class Product implements Serializable {
     private LocalDate date;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "image")
     private byte[] image;
 
@@ -101,6 +103,10 @@ public class Product implements Serializable {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public String getImageData() {
+        return Base64.getMimeEncoder().encodeToString(image);
     }
 
     public List<Question> getQuestions() { return this.questions; }

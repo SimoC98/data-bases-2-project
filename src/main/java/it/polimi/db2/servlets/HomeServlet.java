@@ -8,8 +8,13 @@ import it.polimi.db2.services.CompilationService;
 import it.polimi.db2.services.ProductService;
 import it.polimi.db2.services.QuestionService;
 import it.polimi.db2.services.UserService;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +39,16 @@ public class HomeServlet extends HttpServlet {
     private UserService userService;
     @EJB(name = "it.polimi.db2.services/ProductService")
     private ProductService productService;
+    private TemplateEngine templateEngine;
+
+    public void init() throws ServletException {
+        ServletContext servletContext = getServletContext();
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        this.templateEngine = new TemplateEngine();
+        this.templateEngine.setTemplateResolver(templateResolver);
+        templateResolver.setSuffix(".html");
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -54,8 +69,12 @@ public class HomeServlet extends HttpServlet {
             productService.createProduct("prodotto_prova22222","descrizione prodotto prova22222", (float) 30,today,null);
         } catch (ProductAlreadyExistingException e) {
             e.printStackTrace();
-        }
-
+        }*/
+        String path = "/WEB-INF/createProduct.html";
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        templateEngine.process(path, ctx, response.getWriter());
+/*
 
 
 

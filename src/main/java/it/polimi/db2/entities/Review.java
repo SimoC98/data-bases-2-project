@@ -32,7 +32,6 @@ public class Review implements Serializable {
         this.reviewText = text;
     }
 
-
     public void setUser(User user) {
         this.user = user;
     }
