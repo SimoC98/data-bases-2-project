@@ -70,7 +70,7 @@ public class CreateReview extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Impossible to create review");
         }
 
-        String path = "GetProductAndReviews";
+        String path = "getProductReviews";
         response.sendRedirect(path);
     }
 }

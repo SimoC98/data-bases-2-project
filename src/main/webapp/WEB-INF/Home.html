@@ -14,11 +14,11 @@
         <p class="h2 text-primary m-3 text-capitalize" th:text="${product.getName()}"></p>
         <div class="row mx-5 mb-2">
             <div class="col">
-                <img th:if="${product.getImage() != null}" th:src="${'data:image/png;base64,'+product.getImageData()}" alt=""/>
+                <img th:if="${product.getImage() != null}" th:src="@{'data:image/png;base64,'+product.getImageData()}" alt=""/>
                 <img th:if="${product.getImage() == null}" src="https://www.visittranas.com/wp-content/uploads/2018/03/placeholder.jpg" />
             </div>
             <div class="col">
-                <p class=text-uppercase" th:text="${product.getDescription()}"></p>
+                <p class="text-uppercase" th:text="${product.getDescription()}"></p>
                 <div class="row">
                     <p class="col font-weight-bold">Price:</p>
                     <p class="col" th:text="${product.getPrice()}"></p>
@@ -32,16 +32,20 @@
                 </div>
             </div>
         </div>
-        <div th:unless="${reviews.isEmpty()}">
-            <div th:each="r: ${reviews}">
-                <p th:text="${r.getReviewText()}"></p>
-                <p th:text="${r.getUser()}" class="text-right text-dark font-italic"></p>
-            </div>
+        <br>
+        <div th:unless="${reviews.isEmpty()}" class="px-5">
+            <ul class="list-group mx-5" th:each="r: ${reviews}">
+                <li class="list-group-item">
+                    <p th:text="${r.getReviewText()}"></p>
+                    <p th:text="${r.getUser.getUsername()}" class="text-right text-dark font-italic">/p>
+                </li>
+            </ul>
         </div>
         <div th:if="${reviews.isEmpty()}">
             <p class="text-dark text-center">There are no Review!</p>
         </div>
-        <div class="text-center p-5">
+        <br>
+        <div class="text-center mx-5">
             <form th:action="@{/createReview}" method="post" class="mx-5">
                 <input type="text" class="form-control" th:name="review_txt" placeholder="Enter your review here.." required>
                 <input class="btn btn-primary w-50 m-1" type="submit" value="Save">
