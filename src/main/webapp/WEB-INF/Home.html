@@ -10,30 +10,48 @@
 </head>
 <body>
     <p class="h2 text-center">Home</p>
-    <p th:text="${product.getName()}"></p>
-    <div class="row">
-        <div class="col">
-            <img th:src="${'data:image/png;base64,'+product.getImage()}" alt=""/>
-        </div>
-        <div class="col">
-            <p th:text="${product.getDescription()}"></p>
-            <div class="row">
-                <p class="col font-weight-bold">Price:</p>
-                <p class="col" th:text="${product.getPrice()}"></p>
+    <div th:if="${product != null}" class="align-content-center">
+        <p class="h2 text-primary m-3 text-capitalize" th:text="${product.getName()}"></p>
+        <div class="row mx-5 mb-2">
+            <div class="col">
+                <img th:if="${product.getImage() != null}" th:src="${'data:image/png;base64,'+product.getImageData()}" alt=""/>
+                <img th:if="${product.getImage() == null}" src="https://www.visittranas.com/wp-content/uploads/2018/03/placeholder.jpg" />
             </div>
-            <div class="row">
-                <p class="col font-weight-bold">Date:</p>
-                <p class="col" th:text="${product.getDate()}"></p>
+            <div class="col">
+                <p class=text-uppercase" th:text="${product.getDescription()}"></p>
+                <div class="row">
+                    <p class="col font-weight-bold">Price:</p>
+                    <p class="col" th:text="${product.getPrice()}"></p>
+                </div>
+                <div class="row">
+                    <p class="col font-weight-bold">Date:</p>
+                    <p class="col" th:text="${product.getDate()}"></p>
+                </div>
+                <div class="row text-center">
+                    <a th:href="@{/getDynamicProductQuestionnaire}" type="button" class="btn btn-primary text-white">Fill Questionnaire</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div th:unless="${reviews.isEmpty()}"></div>
-        <div th:each="r: ${reviews}">
-            <p th:text="${r.getReviewText()}"></p>
-            <p th:text="${r.getUser()}" class="text-right text-dark font-italic"></p>
+        <div th:unless="${reviews.isEmpty()}">
+            <div th:each="r: ${reviews}">
+                <p th:text="${r.getReviewText()}"></p>
+                <p th:text="${r.getUser()}" class="text-right text-dark font-italic"></p>
+            </div>
         </div>
         <div th:if="${reviews.isEmpty()}">
             <p class="text-dark text-center">There are no Review!</p>
         </div>
+        <div class="text-center p-5">
+            <form th:action="@{/createReview}" method="post" class="mx-5">
+                <input type="text" class="form-control" th:name="review_txt" placeholder="Enter your review here.." required>
+                <input class="btn btn-primary w-50 m-1" type="submit" value="Save">
+            </form>
+        </div>
+    </div>
+    <div th:if="${product == null}" class="text-center">
+        <p class="text-dark">There are no Product today!</p>
+        <a th:href="@{/hello}" type="button" class="btn btn-primary text-white">Create Product</a>
+    </div>
+
 </body>
 </html>

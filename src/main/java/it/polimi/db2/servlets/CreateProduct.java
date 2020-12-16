@@ -3,6 +3,7 @@ package it.polimi.db2.servlets;
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.exception.ProductAlreadyExistingException;
 import it.polimi.db2.services.ProductService;
+import it.polimi.db2.utils.ImageUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
@@ -66,6 +67,7 @@ public class CreateProduct extends HttpServlet {
             }
             imagePart = request.getPart("image");
             image = IOUtils.toByteArray(imagePart.getInputStream());
+            //image = ImageUtils.readImage(imagePart.getInputStream());
         } catch(NumberFormatException | NullPointerException e) {
              badRequest = true;
             //e.printStackTrace();
