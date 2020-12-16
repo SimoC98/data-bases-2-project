@@ -2,6 +2,7 @@ package it.polimi.db2.servlets;
 
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.Question;
+import it.polimi.db2.entities.User;
 import it.polimi.db2.exception.ProductAlreadyExistingException;
 import it.polimi.db2.services.ProductService;
 import it.polimi.db2.services.QuestionService;
@@ -18,10 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.LinkedList;
 import java.util.List;
 
 @WebServlet(name = "GetDynamicProductQuestionnaire")
@@ -43,6 +42,12 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        User u = (User) request.getSession().getAttribute("user");
+        if(u.isBlocked()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"You are blocked");
+            return;
+        }
 
         ZoneId zoneId = ZoneId.of("Europe/Rome");
         LocalDate today = LocalDate.now(zoneId);
