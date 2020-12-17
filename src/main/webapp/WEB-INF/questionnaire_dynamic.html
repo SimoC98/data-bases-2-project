@@ -10,7 +10,7 @@
 <h1 class="title text-center p-3">Questionnaire about the Product</h1>
 <div class="d-flex justify-content-center">
 
-    <form action="submitQuestionnaire" method="post">
+    <form th:action="@{/submitQuestionnaire}" method="post">
         <div id="dynamic">
             <div class="list-group" th:each="q : ${questions} ">
                 <p th:text="${q.questionText} "></p>

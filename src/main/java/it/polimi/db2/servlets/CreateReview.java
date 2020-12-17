@@ -60,6 +60,7 @@ public class CreateReview extends HttpServlet {
 
         if(badRequest || reviewTxt==null || reviewTxt.length()==0 || product==null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
+            return;
         }
 
         Review review = null;
@@ -68,6 +69,7 @@ public class CreateReview extends HttpServlet {
         } catch(Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Impossible to create review");
+            return;
         }
 
         String path = "getProductReviews";
