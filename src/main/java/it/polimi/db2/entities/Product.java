@@ -34,7 +34,6 @@ public class Product implements Serializable {
     private LocalDate date;
 
     @Lob
-    @Basic(fetch = FetchType.LAZY)
     @Column(name = "image")
     private byte[] image;
 

@@ -14,7 +14,7 @@
         <p class="h2 text-primary m-3 text-capitalize" th:text="${product.getName()}"></p>
         <div class="row mx-5 mb-2">
             <div class="col">
-                <img th:if="${product.getImage() != null}" th:src="@{'data:image/png;base64,'+product.getImageData()}" alt=""/>
+                <img th:if="${product.getImage() != null}" th:src="*{'data:image/png;base64,'+product.getImageData()}" alt=""/>
                 <img th:if="${product.getImage() == null}" src="https://www.visittranas.com/wp-content/uploads/2018/03/placeholder.jpg" />
             </div>
             <div class="col">

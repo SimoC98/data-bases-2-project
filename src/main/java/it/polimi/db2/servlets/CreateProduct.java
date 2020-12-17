@@ -66,8 +66,8 @@ public class CreateProduct extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Invalid date selected");
             }
             imagePart = request.getPart("image");
-            image = IOUtils.toByteArray(imagePart.getInputStream());
-            //image = ImageUtils.readImage(imagePart.getInputStream());
+            //image = IOUtils.toByteArray(imagePart.getInputStream());
+            image = ImageUtils.readImage(imagePart.getInputStream());
         } catch(NumberFormatException | NullPointerException e) {
              badRequest = true;
             //e.printStackTrace();
