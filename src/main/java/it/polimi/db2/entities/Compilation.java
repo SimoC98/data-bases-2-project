@@ -40,7 +40,6 @@ public class Compilation implements Serializable {
 
     //map many to many rel with question with a map
     @ElementCollection
-    //TODO FETCH TYPE
     @CollectionTable(name = "answer", joinColumns = @JoinColumn(name = "compilation_id"))
     @MapKeyJoinColumn(name = "question_id")
     @Column(name = "answer_text")
