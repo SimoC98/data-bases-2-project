@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -28,13 +29,22 @@ public class ProductService {
     }
 
     public Product findProductByDate(LocalDate date) {
-        List<Product> p = em.createNamedQuery("Product.findByDate",Product.class).setParameter("date",date).getResultList();
-        if(p.isEmpty()) return null;
+        List<Product> p = em.createNamedQuery("Product.findByDate", Product.class).setParameter("date", date).getResultList();
+        if (p.isEmpty()) return null;
         else return p.get(0);
     }
 
     public Product findProductById(int id) {
-        return em.find(Product.class,id);
+        return em.find(Product.class, id);
+    }
+
+    public List<Product> findAllProducts() {
+        ZoneId zoneId = ZoneId.of("Europe/Rome");
+        LocalDate today = LocalDate.now(zoneId);
+        List<Product> p = em.createNamedQuery("Product.findAllByPreviousDate", Product.class).setParameter("date", today).getResultList();
+        if (p.isEmpty()) return null;
+        return p;
+
     }
 
 }

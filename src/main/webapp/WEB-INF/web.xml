@@ -55,6 +55,14 @@
         <url-pattern>/getProductReviews</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>GetAllProducts</servlet-name>
+        <servlet-class>it.polimi.db2.servlets.GetAllProducts</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetAllProducts</servlet-name>
+        <url-pattern>/getAllProducts</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>GetDynamicProductQuestionnaire</servlet-name>
         <servlet-class>it.polimi.db2.servlets.GetDynamicProductQuestionnaire</servlet-class>
     </servlet>

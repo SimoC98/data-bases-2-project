@@ -10,7 +10,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,13 +21,11 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-@WebServlet(name = "GetProductAndReviews")
-public class GetProductAndReviews extends HttpServlet {
+@WebServlet(name = "GetAllProducts")
+public class GetAllProducts extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @EJB(name = "it.polimi.db2.services/ProductService")
     private ProductService productService;
-    @EJB(name = "it.polimi.db2.services/ReviewService")
-    private ReviewService reviewService;
     private TemplateEngine templateEngine;
 
     @Override
@@ -42,30 +39,22 @@ public class GetProductAndReviews extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ZoneId zoneId = ZoneId.of("Europe/Rome");
-        LocalDate today = LocalDate.now(zoneId);
 
-        Product p = null;
+        List<Product> p = null;
         try {
-            p = productService.findProductByDate(today);
+            p = productService.findAllProducts();
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Product not found");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "There are no products corresponding to a previous date");
             return;
         }
 
-        List<Review> reviews = null;
-        if(p!=null) {
-            reviews = reviewService.findReviewsByProduct(p.getIdProduct());
-        }
-
-        String path = "/WEB-INF/Home.html";
+        String path = "/WEB-INF/products.html";
         ServletContext servletContext = request.getServletContext();
-        final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        ctx.setVariable("products", p);
+        templateEngine.process(path, ctx, response.getWriter());
 
-        ctx.setVariable("product",p);
-        ctx.setVariable("reviews",reviews);
-
-        templateEngine.process(path,ctx,response.getWriter());
     }
 }
+
