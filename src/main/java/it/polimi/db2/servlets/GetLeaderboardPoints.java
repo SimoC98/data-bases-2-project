@@ -82,7 +82,6 @@ public class GetLeaderboardPoints extends HttpServlet {
         final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
         ctx.setVariable("users",users);
         ctx.setVariable("points",points);
-      //  ctx.setVariable("compilations",compilations);
         templateEngine.process(path,ctx,response.getWriter());
     }
 }
