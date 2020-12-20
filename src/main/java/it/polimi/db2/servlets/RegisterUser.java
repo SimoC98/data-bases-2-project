@@ -63,12 +63,12 @@ public class RegisterUser extends HttpServlet {
 
         String path = "index.html";
         if(error!=null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+            /*RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             request.setAttribute("error_msg",error);
-            dispatcher.forward(request,response);
+            dispatcher.forward(request,response);*/
             ServletContext servletContext = request.getServletContext();
             final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
-            ctx.setVariable("error_msg","Wrong credentials... please try again or register");
+            ctx.setVariable("error_msg",error);
             templateEngine.process(path,ctx,response.getWriter());
         }
         else {
