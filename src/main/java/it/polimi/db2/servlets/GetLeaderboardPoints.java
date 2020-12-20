@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -60,14 +61,14 @@ public class GetLeaderboardPoints extends HttpServlet {
 
         List<Compilation> compilations = null;
         try {
-            compilationService.getOrderedCompilations(product.getIdProduct());
+            compilations = compilationService.getOrderedCompilations(product.getIdProduct());
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to retrieve leaderboard informations");
             return;
         }
 
-        List<String> users = null;
-        List<Integer> points = null;
+        List<String> users = new ArrayList<>();
+        List<Integer> points = new ArrayList<>();
         if(!compilations.isEmpty()) {
             compilations.stream().forEach(x -> {
                 users.add(x.getUser().getUsername());
@@ -75,12 +76,13 @@ public class GetLeaderboardPoints extends HttpServlet {
             });
         }
 
-        //todo: add path
-        String path = null;
+        System.out.println("ciao");
+        String path = "/WEB-INF/leaderboard.html";
         ServletContext servletContext = request.getServletContext();
         final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
         ctx.setVariable("users",users);
         ctx.setVariable("points",points);
+      //  ctx.setVariable("compilations",compilations);
         templateEngine.process(path,ctx,response.getWriter());
     }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>creation page</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../css/myStyle.css" th:href="@{/css/mystyle.css}" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../css/bootstrap.css" th:href="@{/css/bootstrap.css}" />
+</head>
+<body>
+<p class="h1 text-center">Leaderboard Page</p>
+<div th:if="${users!=null && !users.isEmpty()}" class="align-content-center">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">username</th>
+            <th scope="col">points</th>
+        </tr>
+        </thead>
+        <tbody th:each="u : ${users}">
+        <tr th:with="cont=${users.indexOf(u)}">
+            <th scope="row"><p th:text="${cont+1}"></p></th>
+            <td><p th:text="${u}"></p></td>
+            <td><p th:text="${points.get(cont)}"></p></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<div th:unless="${users!=null} && ${!users.isEmpty()}">
+    <p>no leaderboard</p>
+</div>
+
+
+</body>
+</html>
