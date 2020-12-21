@@ -118,6 +118,14 @@
         <servlet-name>SubmitQuestionnaire</servlet-name>
         <url-pattern>/submitQuestionnaire</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GetCompilations</servlet-name>
+        <servlet-class>it.polimi.db2.servlets.SubmitQuestionnaire</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetCompilations</servlet-name>
+        <url-pattern>/getCompilations</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>UserFilter</filter-name>
@@ -140,5 +148,6 @@
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/createProduct</url-pattern>
         <url-pattern>/createProductQuestions</url-pattern>
+        <url-pattern>/getCompilations</url-pattern>
     </filter-mapping>
 </web-app>
