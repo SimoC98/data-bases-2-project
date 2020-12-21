@@ -76,7 +76,6 @@ public class GetLeaderboardPoints extends HttpServlet {
             });
         }
 
-        System.out.println("ciao");
         String path = "/WEB-INF/leaderboard.html";
         ServletContext servletContext = request.getServletContext();
         final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
