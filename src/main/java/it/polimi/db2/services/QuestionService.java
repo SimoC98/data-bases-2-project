@@ -23,26 +23,17 @@ public class QuestionService {
         return q;
     }
 
-    public Question createQuestion(String text, int productId) {
+    public void createQuestion(String text, int productId) {
         Product product = em.find(Product.class, productId);
         Question q = new Question(text, QuestionType.DYNAMIC);
         product.addQuestion(q);
         em.persist(product);
-        return q;
     }
 
     public List<Question> findQuestionByProduct(int productId) {
-        /*List<Question> questions = em.createNamedQuery("Question.findByProduct", Question.class).
-                setParameter("pId", productId).getResultList();
-        return questions;*/
-        List<Question> questions = null;
-        Product p = em.find(Product.class,productId);
+        List<Question> questions;
+        Product p = em.find(Product.class, productId);
         questions = p.getQuestions();
-        return questions;
-    }
-
-    public List<Question> findFixedQuestion() {
-        List<Question> questions = em.createNamedQuery("Question.findFixed", Question.class).getResultList();
         return questions;
     }
 
@@ -50,15 +41,9 @@ public class QuestionService {
 
         Product p = em.find(Product.class, idProduct);
         List<Question> dynamicQuestions = em.createNamedQuery("Question.findByProduct", Question.class).setParameter("pId", idProduct).getResultList();
-        List<Question> fixedQuestions = em.createNamedQuery("Question.findFixed", Question.class).getResultList();
         for (Question q : dynamicQuestions) {
-            em.remove(q);
+            if (q.getType().equals(QuestionType.DYNAMIC)) em.remove(q);
         }
-/*
-        for (Question q : fixedQuestions) {
-            List<Answer> answers = new ArrayList<Answer>(q.getAnswers());
-            answers.stream().filter(answer -> answer.getCompilation().getProduct().getIdProduct().equals(idProduct)).forEach(answer -> q.getAnswers().remove(answer));
-        }*/
         p.removeQuestions();
 
     }

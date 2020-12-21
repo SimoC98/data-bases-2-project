@@ -25,7 +25,7 @@
                     <a th:href="@{/#}" type="button" class="btn mt-auto btn-info text-white"> Get questionnaire
                         compilations</a>
                     <div style="height:10px; width:100%"></div>
-                    <form th:action="@{/deleteQuestionnaire}" method="post">
+                    <form th:action="@{/deleteQuestionnaire(productId=${p.getIdProduct()})}" method="post" >
                         <input class="btn btn-primary w-100 btn-danger mt-auto" type="submit" value="Delete all questionnaires data">
                     </form>
                 </div>

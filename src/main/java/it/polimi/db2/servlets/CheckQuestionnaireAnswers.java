@@ -4,6 +4,7 @@ import it.polimi.db2.entities.BadWord;
 import it.polimi.db2.entities.Compilation;
 import it.polimi.db2.entities.User;
 import it.polimi.db2.exception.BadWordException;
+import it.polimi.db2.exception.EmptyAnswerException;
 import it.polimi.db2.services.CompilationService;
 import it.polimi.db2.services.UserService;
 import org.thymeleaf.TemplateEngine;
@@ -76,6 +77,8 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
                     userService.blockUser(u);
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST,"You have been blocked");
                     return;
+                } catch (EmptyAnswerException e) {
+                    e.printStackTrace();
                 }
 
             }

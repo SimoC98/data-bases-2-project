@@ -56,6 +56,10 @@ public class Compilation implements Serializable {
         this.points = 0;
     }
 
+    public void deleteAllAnswers(){
+        this.getAnswersQuestions().clear();
+    }
+
     public void addAnswerPoints(int points){
         this.points += points;
     }
@@ -108,7 +112,6 @@ public class Compilation implements Serializable {
         this.log = log;
     }
 
-
     public void addAnswerQuestion(Question q, String answer_text) {
         answersQuestions.put(q,answer_text);
     }
@@ -125,4 +128,7 @@ public class Compilation implements Serializable {
         return idCompilation;
     }
 
+    public void setAnswersQuestions(Map<Question, String> answersQuestions) {
+        this.answersQuestions = answersQuestions;
+    }
 }

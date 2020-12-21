@@ -9,7 +9,6 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Question.findAll", query = "SELECT q FROM Question q"),
         @NamedQuery(name = "Question.findByProduct", query = "Select q FROM Question q WHERE q.product.idProduct = :pId") ,
-        @NamedQuery(name = "Question.findFixed", query = "SELECT q FROM Question q WHERE q.type = 2") //todo check
 })
 
 public class Question implements Serializable {

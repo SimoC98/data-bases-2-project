@@ -2,13 +2,11 @@ package it.polimi.db2.services;
 
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.exception.ProductAlreadyExistingException;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 @Stateless

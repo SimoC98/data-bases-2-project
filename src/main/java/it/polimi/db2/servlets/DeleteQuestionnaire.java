@@ -19,7 +19,7 @@ public class DeleteQuestionnaire extends HttpServlet {
     private CompilationService compilationService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int productId = (int) request.getAttribute("productId");
+        int productId = Integer.parseInt(request.getParameter("productId"));
 
         try {
             compilationService.deleteCompilationByProductId(productId);
