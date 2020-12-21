@@ -92,4 +92,14 @@ public class CompilationService {
             }
         }
     }
+
+    public List<Compilation> getDeletedCompilation(int productId){
+        List<Compilation> compilations = em.createNamedQuery("Compilation.getDeletedCompilation",Compilation.class).setParameter("idProduct",productId).setHint("javax.persistence.cache.storeMode ", "REFRESH").getResultList();
+        return compilations;
+    }
+
+    public List<Compilation> getCompilationList(int productId){
+        List<Compilation> compilations = em.createNamedQuery("Compilation.getCompilationList",Compilation.class).setParameter("idProduct",productId).setHint("javax.persistence.cache.storeMode ", "REFRESH").getResultList();
+        return compilations;
+    }
 }

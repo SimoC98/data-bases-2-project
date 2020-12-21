@@ -11,7 +11,9 @@ import java.util.Map;
         @NamedQuery(name = "Compilation.findByProductId", query = "SELECT c FROM Compilation c WHERE c.product.idProduct = :idProduct"),
         @NamedQuery(name = "Compilation.findByUserId", query = "SELECT c FROM Compilation c WHERE c.user.id = :idUser"),
         @NamedQuery(name = "Compilation.findByUser&ProductId", query = "SELECT c FROM Compilation c WHERE c.user.id = :idUser AND c.product.idProduct = :idProduct"),
-        @NamedQuery(name = "Compilation.getOrderedCompilation", query = "SELECT c FROM Compilation c WHERE c.product.idProduct = :idProduct order by c.points desc")
+        @NamedQuery(name = "Compilation.getOrderedCompilation", query = "SELECT c FROM Compilation c WHERE c.product.idProduct = :idProduct order by c.points desc"),
+        @NamedQuery(name = "Compilation.getCompilationList", query = "SELECT c FROM Compilation c WHERE c.product.idProduct = :idProduct AND c.deleted = 0"),
+        @NamedQuery(name = "Compilation.getDeletedCompilation", query = "SELECT c FROM Compilation c WHERE c.product.idProduct = :idProduct AND c.deleted = 1")
 })
 public class Compilation implements Serializable {
     private static final long serialVersionUID = 1L;

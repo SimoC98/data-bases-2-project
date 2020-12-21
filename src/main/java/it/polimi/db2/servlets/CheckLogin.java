@@ -74,6 +74,15 @@ public class CheckLogin extends HttpServlet {
             //dispatcher.forward(request,response);
         } else {
             request.getSession().setAttribute("user",user);
+
+            /*if(user.getUsername().equals("admin")) {
+                //path = admin home path
+                response.sendRedirect(path);
+            } else {
+                path = "getProductReviews";
+                response.sendRedirect(path);
+            }*/
+
             path = "getProductReviews";
             response.sendRedirect(path);
             //RequestDispatcher dispatcher = request.getRequestDispatcher(path);

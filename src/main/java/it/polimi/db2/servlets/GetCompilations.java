@@ -1,8 +1,8 @@
 package it.polimi.db2.servlets;
 
+
 import it.polimi.db2.entities.Compilation;
 import it.polimi.db2.entities.Product;
-import it.polimi.db2.entities.User;
 import it.polimi.db2.services.CompilationService;
 import it.polimi.db2.services.ProductService;
 import org.thymeleaf.TemplateEngine;
@@ -11,7 +11,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,8 +29,8 @@ this servlet return 2 lists:
 - points is a list of Integer containing points
 both lists are ordered according to points
  */
-@WebServlet(name = "GetLeaderboardPoints")
-public class GetLeaderboardPoints extends HttpServlet {
+@WebServlet(name = "GetCompilations")
+public class GetCompilations extends HttpServlet {
     @EJB(name = "it.polimi.db2.services/CompilationService")
     private CompilationService compilationService;
     @EJB(name = "it.polimi.db2.services/ProductService")
@@ -49,38 +48,28 @@ public class GetLeaderboardPoints extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ZoneId zoneId = ZoneId.of("Europe/Rome");
-        LocalDate today = LocalDate.now(zoneId);
 
-        Product product = productService.findProductByDate(today);
-
-        if(product==null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"There is no product today");
-            return;
-        }
+         Product product = (Product) request.getAttribute("product");
 
         List<Compilation> compilations = null;
+        List<Compilation> deleted = null;
         try {
-            compilations = compilationService.getOrderedCompilations(product.getIdProduct());
+            compilations = compilationService.getCompilationList(product.getIdProduct());
+            deleted = compilationService.getDeletedCompilation(product.getIdProduct());
         } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to retrieve leaderboard informations");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to retrieve Compilation informations");
             return;
         }
 
-        List<String> users = new ArrayList<>();
-        List<Integer> points = new ArrayList<>();
-        if(!compilations.isEmpty()) {
-            compilations.stream().forEach(x -> {
-                users.add(x.getUser().getUsername());
-                points.add(x.getPoints());
-            });
-        }
 
-        String path = "/WEB-INF/leaderboard.html";
+
+        String path = "/WEB-INF/inspectCompilation.html";
         ServletContext servletContext = request.getServletContext();
         final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
-        ctx.setVariable("users",users);
-        ctx.setVariable("points",points);
+        ctx.setVariable("product",product);
+        ctx.setVariable("compilations",compilations);
+        ctx.setVariable ("deleted", deleted);
         templateEngine.process(path,ctx,response.getWriter());
     }
+
 }
