@@ -39,7 +39,7 @@ public class Compilation implements Serializable {
     private Integer points;
 
     //map many to many rel with question with a map
-    @ElementCollection
+    @ElementCollection(fetch= FetchType.EAGER)
     @CollectionTable(name = "answer", joinColumns = @JoinColumn(name = "compilation_id"))
     @MapKeyJoinColumn(name = "question_id")
     @Column(name = "answer_text")

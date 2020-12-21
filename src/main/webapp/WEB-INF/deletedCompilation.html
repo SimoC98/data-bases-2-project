@@ -10,7 +10,7 @@
 <body>
 <h1 class="title text-center p-3">Your Questionnaire has been deleted</h1>
 <div class="d-flex justify-content-center">
-    <form action="getProductReviews" method="get">
+    <form th:action="@{/getProductReviews}" method="get">
         <input class="btn btn-primary w-100" type="submit" name="action" value="Home Page" role="button">
     </form>
 </div>

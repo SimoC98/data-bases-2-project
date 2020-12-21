@@ -19,26 +19,17 @@ public class DeleteQuestionnaire extends HttpServlet {
     private CompilationService compilationService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Compilation compilation = (Compilation) request.getAttribute("compilation");
-
-        if(compilation==null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
-            return;
-        }
+        int productId = (int) request.getAttribute("productId");
 
         try {
-            //compilationService.deleteQuestionnaire
+            compilationService.deleteCompilationByProductId(productId);
         } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to delete the questionnaire");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to delete the questionnaires");
             return;
         }
 
-        //TODO: add path
-        String path = null;
+        System.out.println("Compilations deleted");
+        String path = "getAllProducts";
         response.sendRedirect(path);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

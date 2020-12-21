@@ -48,6 +48,8 @@ public class CompilationService {
         Product product = null;
         if (! compilationsToDelete.isEmpty() ){
             for (Compilation c:compilationsToDelete) {
+                //TODO CANCEL ANSWERS DATA
+
                 user = c.getUser();
                 user.removeCompilation(c);
                 product = c.product();
