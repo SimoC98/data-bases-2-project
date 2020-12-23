@@ -15,7 +15,7 @@ public class UserFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        String path = request.getServletContext().getContextPath() + "index.html";
+        String path = request.getServletContext().getContextPath() + "/index.html";
 
         HttpSession session = request.getSession();
         if(session.isNew() || session.getAttribute("user")==null) {
