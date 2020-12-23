@@ -120,7 +120,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>GetCompilations</servlet-name>
-        <servlet-class>it.polimi.db2.servlets.SubmitQuestionnaire</servlet-class>
+        <servlet-class>it.polimi.db2.servlets.GetCompilations</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GetCompilations</servlet-name>
