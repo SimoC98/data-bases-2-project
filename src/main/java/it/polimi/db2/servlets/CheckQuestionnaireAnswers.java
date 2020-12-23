@@ -74,20 +74,21 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
                 String answerText = request.getParameter(par);
                 questions.add(questionId);
                 answers.add(answerText);
-                try{
-                    compilationService.createAnswer(questions,answers,compilation.getIdCompilation());
-                } catch (BadWordException e) {
-                    userService.blockUser(u);
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST,"You have been blocked");
-                    ctx.setVariable("msg","You have been blocked");
-                    path = "/WEB-INF/messagePage.html";
-                    templateEngine.process(path,ctx,response.getWriter());
-                    return;
-                } catch (EmptyAnswerException e) {
-                    e.printStackTrace();
-                }
 
             }
+        }
+        try{
+            compilationService.createAnswer(questions,answers,compilation.getIdCompilation());
+        } catch (BadWordException e) {
+            e.printStackTrace();
+            userService.blockUser(u);
+            //response.sendError(HttpServletResponse.SC_BAD_REQUEST,"You have been blocked");
+            ctx.setVariable("msg","You have been blocked");
+            path = "/WEB-INF/messagePage.html";
+            templateEngine.process(path,ctx,response.getWriter());
+            return;
+        } catch (EmptyAnswerException e) {
+            e.printStackTrace();
         }
         ctx.setVariable("msg","Congratulation! You have compiled a questionnaire");
         path = "/WEB-INF/messagePage.html";
