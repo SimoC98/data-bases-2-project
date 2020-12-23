@@ -143,12 +143,12 @@
         <url-pattern>/getDynamicProductQuestionnaire</url-pattern>
         <url-pattern>/GetLeaderboardPoints</url-pattern>
         <url-pattern>/submitQuestionnaire</url-pattern>
-        <url-pattern>/getAllProducts</url-pattern> <!-- TODO -->
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/createProduct</url-pattern>
         <url-pattern>/createProductQuestions</url-pattern>
-        <url-pattern>/getCompilations</url-pattern> <!-- TODO -->
+        <url-pattern>/getCompilations</url-pattern>
+        <url-pattern>/getAllProducts</url-pattern>
     </filter-mapping>
 </web-app>

@@ -18,7 +18,7 @@
                 <img th:if="${product.getImage() == null}" src="https://www.visittranas.com/wp-content/uploads/2018/03/placeholder.jpg" />
             </div>
             <div class="col">
-                <p class="text-uppercase" th:text="${product.getDescription()}"></p>
+                <p th:text="${product.getDescription()}"></p>
                 <div class="row">
                     <p class="col font-weight-bold">Price:</p>
                     <p class="col" th:text="${product.getPrice()}"></p>
@@ -27,8 +27,8 @@
                     <p class="col font-weight-bold">Date:</p>
                     <p class="col" th:text="${product.getDate()}"></p>
                 </div>
-                <div class="row text-center">
-                    <a th:href="@{/getDynamicProductQuestionnaire}" type="button" class="btn btn-primary text-white">Fill Questionnaire</a>
+                <div class="m-3 text-center">
+                    <a th:href="@{/getDynamicProductQuestionnaire}" type="button" class="btn btn-primary text-white w-75">Fill Questionnaire</a>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
         <div class="text-center mx-5">
             <form th:action="@{/createReview}" method="post" class="mx-5">
                 <input type="text" class="form-control" th:name="review_txt" placeholder="Enter your review here.." required>
-                <input class="btn btn-primary w-50 m-1" type="submit" value="Save">
+                <input class="btn btn-primary w-50 my-3" type="submit" value="Save">
             </form>
         </div>
     </div>

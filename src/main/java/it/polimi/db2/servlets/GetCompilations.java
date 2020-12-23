@@ -48,11 +48,23 @@ public class GetCompilations extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int productId = 0;
+        try{
+            productId = Integer.parseInt(request.getParameter("productId"));
+        }catch( NumberFormatException e){
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to retrieve the correct id");
+            return;
+        }
 
-         Product product = (Product) request.getAttribute("product");
-
+        Product product = null;
         List<Compilation> compilations = null;
         List<Compilation> deleted = null;
+        try{
+            product = productService.findProductById(productId);
+        }catch( Exception e){
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to retrieve the product");
+            return;
+        }
         try {
             compilations = compilationService.getCompilationList(product.getIdProduct());
             deleted = compilationService.getDeletedCompilation(product.getIdProduct());
