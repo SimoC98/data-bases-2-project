@@ -18,10 +18,10 @@
                 <img class="card-img-top" th:if="${p.getImage() == null}"
                      src="https://www.visittranas.com/wp-content/uploads/2018/03/placeholder.jpg"/>
                 <div class="card-body d-flex flex-column">
-                    <h5 class="title">
-                        <a th:href="@{#}" th:text="${p.getName()}"></a>
+                    <h5 class="m-1">
+                        <a class="text-info" th:href="@{#}" th:text="${p.getName()}"></a>
                     </h5>
-                    <p class="card-text" th:text="${p.getDescription()}"></p>
+                    <p class="card-text " th:text="${p.getDescription()}"></p>
                     <a th:href="@{/getCompilations(productId=${p.getIdProduct()})}" type="button" class="btn mt-auto btn-info text-white"> Get questionnaire
                         compilations</a>
                     <div style="height:10px; width:100%"></div>
