@@ -71,7 +71,7 @@ public class SubmitQuestionnaire extends HttpServlet {
         int deleted = 0;
         if (action.equalsIgnoreCase("Cancel")) {
             deleted = 1;
-            path = "/WEB-INF/deletedCompilation.html";
+            path = "/WEB-INF/messagePage.html";
         }
         try {
             newCompilation = compilationService.createCompilation(u.getId(), product.getIdProduct(), log, deleted);
@@ -87,6 +87,7 @@ public class SubmitQuestionnaire extends HttpServlet {
         if (action.equalsIgnoreCase("Cancel")) {
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+            ctx.setVariable("msg","Your Questionnaire has been deleted");
             templateEngine.process(path, ctx, response.getWriter());
         } else {
             request.setAttribute("compilation", newCompilation);

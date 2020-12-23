@@ -8,6 +8,7 @@ import it.polimi.db2.exception.EmptyAnswerException;
 import it.polimi.db2.services.CompilationService;
 import it.polimi.db2.services.UserService;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
@@ -48,6 +49,9 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
         Compilation compilation = (Compilation) request.getAttribute("compilation");
         User u = (User) request.getSession().getAttribute("user");
 
+        ServletContext servletContext = request.getServletContext();
+        final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
+        String path = null;
 
         if(compilation==null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
@@ -70,12 +74,14 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
                 String answerText = request.getParameter(par);
                 questions.add(questionId);
                 answers.add(answerText);
-                //TODO: the transaction has to be rolled back if an answer contains bad words --> all answers added oj the same transaction? Bad word checked in the same transaction?
                 try{
                     compilationService.createAnswer(questions,answers,compilation.getIdCompilation());
                 } catch (BadWordException e) {
                     userService.blockUser(u);
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST,"You have been blocked");
+                    ctx.setVariable("msg","You have been blocked");
+                    path = "/WEB-INF/messagePage.html";
+                    templateEngine.process(path,ctx,response.getWriter());
                     return;
                 } catch (EmptyAnswerException e) {
                     e.printStackTrace();
@@ -83,6 +89,9 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
 
             }
         }
+        ctx.setVariable("msg","Congratulation! You have compiled a questionnaire");
+        path = "/WEB-INF/messagePage.html";
+        templateEngine.process(path,ctx,response.getWriter());
     }
 
 

@@ -8,7 +8,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-<h1 class="title text-center p-3">Your Questionnaire has been deleted</h1>
+<div th:if="${msg!=null}">
+    <h1 class="title text-center p-3" th:text="${msg}"></h1>
+</div>
 <div class="d-flex justify-content-center">
     <form th:action="@{/getProductReviews}" method="get">
         <input class="btn btn-primary w-100" type="submit" name="action" value="Home Page" role="button">

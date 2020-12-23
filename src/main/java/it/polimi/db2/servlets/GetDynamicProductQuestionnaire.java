@@ -42,10 +42,15 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        String path = null;
 
         User u = (User) request.getSession().getAttribute("user");
         if(u.isBlocked()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"You are blocked");
+            ctx.setVariable("msg","You are blocked");
+            path = "/WEB-INF/messagePage.html";
+            templateEngine.process(path, ctx, response.getWriter());
             return;
         }
 
@@ -68,9 +73,7 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
 
         List<Question> questions = questionService.findQuestionByProduct(p.getIdProduct());
 
-        String path = "/WEB-INF/questionnaire_dynamic.html";
-        ServletContext servletContext = getServletContext();
-        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        path = "/WEB-INF/questionnaire_dynamic.html";
         ctx.setVariable("questions", questions);
         templateEngine.process(path, ctx, response.getWriter());
     }
