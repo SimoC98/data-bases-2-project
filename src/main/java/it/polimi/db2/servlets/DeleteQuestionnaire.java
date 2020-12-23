@@ -19,12 +19,19 @@ public class DeleteQuestionnaire extends HttpServlet {
     private CompilationService compilationService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int productId = Integer.parseInt(request.getParameter("productId"));
+
+        int productId = 0;
+
+        try {
+            productId = Integer.parseInt(request.getParameter("productId"));
+        } catch (NullPointerException | NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to retrieve product because it is null");
+        }
 
         try {
             compilationService.deleteCompilationByProductId(productId);
         } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to delete the questionnaires");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to delete the questionnaires");
             return;
         }
 

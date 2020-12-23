@@ -22,7 +22,7 @@
                         <a th:href="@{#}" th:text="${p.getName()}"></a>
                     </h5>
                     <p class="card-text" th:text="${p.getDescription()}"></p>
-                    <a th:href="@{/#}" type="button" class="btn mt-auto btn-info text-white"> Get questionnaire
+                    <a th:href="@{/getCompilations(productId=${p.getIdProduct()})}" type="button" class="btn mt-auto btn-info text-white"> Get questionnaire
                         compilations</a>
                     <div style="height:10px; width:100%"></div>
                     <form th:action="@{/deleteQuestionnaire(productId=${p.getIdProduct()})}" method="post" >
