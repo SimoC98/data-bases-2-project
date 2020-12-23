@@ -27,8 +27,11 @@
                     <p class="col font-weight-bold">Date:</p>
                     <p class="col" th:text="${product.getDate()}"></p>
                 </div>
-                <div class="m-3 text-center">
+                <div class="m-2 text-center">
                     <a th:href="@{/getDynamicProductQuestionnaire}" type="button" class="btn btn-primary text-white w-75">Fill Questionnaire</a>
+                </div>
+                <div class="m-2 text-center">
+                    <a th:href="@{/GetLeaderboardPoints}" type="button" class="btn btn-light w-75">Leaderboard</a>
                 </div>
             </div>
         </div>
