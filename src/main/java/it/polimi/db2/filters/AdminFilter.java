@@ -1,5 +1,7 @@
 package it.polimi.db2.filters;
 
+import it.polimi.db2.entities.User;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +17,13 @@ public class AdminFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        String path = request.getServletContext().getContextPath() + "index.html";
+        String path = request.getServletContext().getContextPath() + "/index.html";
+
 
         HttpSession session = request.getSession();
-        if(session.isNew() || session.getAttribute("user")==null || !request.getAttribute("user").equals("admin")) {
+        User user = (User) session.getAttribute("user");
+
+        if(session.isNew() || session.getAttribute("user")==null || !user.getUsername().equals("admin")) {
             response.sendRedirect(path);
             return;
         }
