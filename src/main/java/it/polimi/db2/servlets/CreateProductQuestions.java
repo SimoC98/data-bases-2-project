@@ -63,8 +63,8 @@ public class CreateProductQuestions extends HttpServlet {
             return;
         }
 
-        //todo:add path
-        String path = null;
+
+        String path = "getProductReviews";
         response.sendRedirect(path);
 
     }

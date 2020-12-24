@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" type="text/css" media="all"
-          href="../css/myStyle.css" th:href="@{/css/mystyle.css}" />
+          href="../css/mystyle.css" th:href="@{/css/mystyle.css}" />
     <link href="../css/bootstrap.css" media="all" rel="stylesheet"
           th:href="@{/css/bootstrap.css}" type="text/css"/>
 </head>
@@ -13,11 +13,11 @@
     <div th:if="${product != null}" class="align-content-center">
         <p class="h2 text-primary m-3 text-capitalize" th:text="${product.getName()}"></p>
         <div class="row mx-5 mb-2">
-            <div class="col">
-                <img th:if="${product.getImage() != null}" th:src="*{'data:image/png;base64,'+product.getImageData()}" alt=""/>
-                <img th:if="${product.getImage() == null}" src="https://www.visittranas.com/wp-content/uploads/2018/03/placeholder.jpg" />
+            <div class="col text-center">
+                <img class="img-5 rounded" th:if="${product.getImage() != null}" th:src="*{'data:image/png;base64,'+product.getImageData()}" alt=""/>
+                <img class="rounded" th:if="${product.getImage() == null}" src="https://www.visittranas.com/wp-content/uploads/2018/03/placeholder.jpg" />
             </div>
-            <div class="col">
+            <div class="col align-self-center">
                 <p th:text="${product.getDescription()}"></p>
                 <div class="row">
                     <p class="col font-weight-bold">Price:</p>
@@ -40,7 +40,7 @@
             <ul class="list-group mx-5" th:each="r: ${reviews}">
                 <li class="list-group-item">
                     <p th:text="${r.getReviewText()}"></p>
-                    <p th:text="${r.getUser.getUsername()}" class="text-right text-dark font-italic">/p>
+                    <p th:text="${r.getUser.getUsername()}" class="text-right text-dark font-italic"></p>
                 </li>
             </ul>
         </div>
