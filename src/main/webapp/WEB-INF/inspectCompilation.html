@@ -4,40 +4,76 @@
     <meta charset="UTF-8">
     <title>Inspection</title>
     <link rel="stylesheet" type="text/css" media="all"
-          href="../css/myStyle.css" th:href="@{/css/mystyle.css}" />
+          href="../css/mystyle.css" th:href="@{/css/mystyle.css}" />
     <link href="../css/bootstrap.css" media="all" rel="stylesheet"
           th:href="@{/css/bootstrap.css}" type="text/css"/>
+    <link href="../css/bootstrap.css" media="all" rel="stylesheet"
+          th:href="@{/css/bootstrap-glyphicons.min.css}" type="text/css"/>
 </head>
 <body class="px-5">
-<p class="h2 text-center pt-4">Inspection Page</p>
-    <div class="card row m-5">
-        <div class="col-4 pb-2 ml-2">
-            <img class="card-img" th:if="${product.getImage() != null}"
-                     th:src="*{'data:image/png;base64,'+product.getImageData()}"/>
-            <img class="card-img" th:if="${product.getImage() == null}"
-                 src="https://www.visittranas.com/wp-content/uploads/2018/03/placeholder.jpg"/>
-        </div>
-        <div class="col-8">
-            <p class="font-weight-bold" th:text="${product.getName()}"></p>
-            <p th:text="${product.getDescription()}"></p>
+<p class="h2 text-center p-3">Inspection Page</p>
+    <div class="card">
+        <div class="row m-2">
+            <div class="col-6 text-center">
+                <img class="img-4 rounded" th:if="${product.getImage() != null}" th:src="*{'data:image/png;base64,'+product.getImageData()}" alt=""/>
+                <img th:if="${product.getImage() == null}" src="https://www.visittranas.com/wp-content/uploads/2018/03/placeholder.jpg" />
+            </div>
+            <div class="col-6 align-self-center">
+                <div class="row">
+                    <p class="col font-weight-bold">Name:</p>
+                    <p class="col" th:text="${product.getName()}"></p>
+                </div>
+                <p th:text="${product.getDescription()}"></p>
+                <div class="row">
+                    <p class="col font-weight-bold">Price:</p>
+                    <p class="col" th:text="${product.getPrice()}"></p>
+                </div>
+                <div class="row">
+                    <p class="col font-weight-bold">Date:</p>
+                    <p class="col" th:text="${product.getDate()}"></p>
+                </div>
+            </div>
         </div>
     </div>
     <br>
-    <div th:unless="${compilations.isEmpty() and deleted.isEmpty()}">
-        <p class="h4">Compilation</p>
-        <ul class="list-group" th:each="c: ${compilations}">
-            <li class="list-group-item row">
-                <p th:text="${c.getUser().getUsername()}"></p>
-                <p th:text="${c.getLog()}"></p>
-                <p th:text="${c.getPoints()}"></p>
+    <div class="my-2" th:unless="${compilations.isEmpty() and deleted.isEmpty()}">
+        <p class="h4">Questionnaire Compiled</p>
+        <div class="row text-center text-white navbar bg-dark m-0 p-1 rounded" th:if="compilations">
+            <p class="col-3 m-0"> User </p>
+            <p class="col-3 m-0"> Log </p>
+            <p class="col-3 m-0"> Points </p>
+            <p class="col-3 m-0"></p>
+        </div>
+        <ul class="list-group list-group-flush" th:each="c: ${compilations}" th:with="answers=${c.getAnswersQuestions()}" >
+            <li class="list-group-item list-group-item-action" th:onclick="'javascript:show(' + ${c.getIdCompilation()} + ')'">
+                <div class="row text-center">
+                    <p class="col-3 m-0" th:text="${c.getUser().getUsername()}"></p>
+                    <p class="col-3 m-0" th:text="${c.getLog()}"></p>
+                    <p class="col-3 m-0" th:text="${c.getPoints()}"></p>
+                    <p class="col-2 m-0"></p>
+                    <span class="col-1 m-0 glyphicon glyphicon-chevron-down" th:id="${'comp-'+c.getIdCompilation()}" aria-hidden="true"></span>
+                </div>
+                <div th:id="${c.getIdCompilation()}" style="display: none;">
+                    <p class="my-3 h6">Answer List</p>
+                    <ul th:each="entry, stats: ${answers}" th:unless="${entry.value.isEmpty()}">
+                        <li class="row">
+                            <p class="col font-weight-bold" th:text="${entry.key.getQuestionText()}"></p>
+                            <p class="col" th:text="${entry.value}"></p>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
         <br>
-        <p class="h4">Deleted</p>
-        <ul class="list-group" th:each="d: ${deleted}">
-            <li class="list-group-item-danger row">
-                <p th:text="${d.getUser().getUsername()}"></p>
-                <p th:text="${d.getLog()}"></p>
+        <p class="h4">Questionnaire Deleted</p>
+        <div class="row text-center navbar bg-dark text-white m-0 p-1 rounded" th:if="deleted">
+            <p class="col m-0"> User </p>
+            <p class="col m-0"> Log </p>
+        </div>
+        <ul class="list-group list-group-flush" th:each="d: ${deleted}">
+            <li class="list-group-item-danger row text-center">
+                <p class="col m-0" th:text="${d.getUser().getUsername()}"></p>
+                <p class="col m-0" th:text="${d.getLog()}"></p>
             </li>
         </ul>
     </div>
@@ -45,4 +81,19 @@
         <p class="text-center">There are no compilations for this Product!</p>
     </div>
 </body>
+<script>
+    function show(id) {
+        var x = document.getElementById(id);
+        var y = document.getElementById("comp-"+id)
+        if (x.style.display === "none") {
+            y.classList.remove("glyphicon-chevron-down");
+            y.classList.add("glyphicon-chevron-up");
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+            y.classList.remove("glyphicon-chevron-up");
+            y.classList.add("glyphicon-chevron-down");
+        }
+    }
+</script>
 </html>
