@@ -86,8 +86,8 @@ public class CheckLogin extends HttpServlet {
                 path = "getProductReviews";
                 response.sendRedirect(path);
             }
-
         }
+
     }
 
     @Override

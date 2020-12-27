@@ -103,7 +103,10 @@ public class CreateProduct extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        String path = "/WEB-INF/createProduct.html";
+        ServletContext servletContext = request.getServletContext();
+        final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
+        templateEngine.process(path,ctx,response.getWriter());
     }
 
     @Override
