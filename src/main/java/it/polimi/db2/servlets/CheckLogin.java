@@ -5,6 +5,7 @@ import it.polimi.db2.exception.InvalidCredentialsException;
 import it.polimi.db2.services.UserService;
 import org.apache.commons.text.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
@@ -46,47 +47,46 @@ public class CheckLogin extends HttpServlet {
         username = StringEscapeUtils.escapeJava(request.getParameter("username"));
         password = StringEscapeUtils.escapeJava(request.getParameter("password"));
 
-        if(username==null || password==null || username.length()==0 || password.length()==0) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
+        if (username == null || password == null || username.length() == 0 || password.length() == 0) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
             return;
         }
 
         User user = null;
         try {
-            user = userService.checkCredentials(username,password);
+            user = userService.checkCredentials(username, password);
             System.out.println(user);
         } catch (InvalidCredentialsException e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
             return;
         }
 
         //jstl operations for forward commented
         String path = null;
-        if(user==null) {
+        if (user == null) {
             path = "index.html";
             ServletContext servletContext = request.getServletContext();
-            final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
-            ctx.setVariable("error_msg","Wrong credentials... please try again or register");
-            templateEngine.process(path,ctx,response.getWriter());
+            final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+            ctx.setVariable("error_msg", "Wrong credentials... please try again or register");
+            templateEngine.process(path, ctx, response.getWriter());
             //request.setAttribute("error_msg","Wrong credentials... please try again or register");
             //RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             //dispatcher.forward(request,response);
         } else {
-            request.getSession().setAttribute("user",user);
+            request.getSession().setAttribute("user", user);
 
-            /*if(user.getUsername().equals("admin")) {
-                //path = admin home path
-                response.sendRedirect(path);
+            if (user.getUsername().equals("admin")) {
+                path = "/WEB-INF/homePageAdmin.html";
+                ServletContext servletContext = request.getServletContext();
+                final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
+                templateEngine.process(path,ctx,response.getWriter());
+
             } else {
                 path = "getProductReviews";
                 response.sendRedirect(path);
-            }*/
+            }
 
-            path = "getProductReviews";
-            response.sendRedirect(path);
-            //RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-            //dispatcher.forward(request,response);
         }
     }
 
