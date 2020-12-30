@@ -57,8 +57,8 @@
                     <p class="my-3 h6">Answer List</p>
                     <ul th:each="entry, stats: ${answers}" th:unless="${entry.value.isEmpty()}">
                         <li class="row">
-                            <p class="col font-weight-bold" th:text="${entry.key.getQuestionText()}"></p>
-                            <p class="col" th:text="${entry.value}"></p>
+                            <p class="col font-weight-bold" th:text="${entry.getKey().getQuestionText()}"></p>
+                            <p class="col" th:text="${entry.getValue()}"></p>
                         </li>
                     </ul>
                 </div>

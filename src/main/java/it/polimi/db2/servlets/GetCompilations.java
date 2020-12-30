@@ -48,6 +48,9 @@ public class GetCompilations extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ZoneId zoneId = ZoneId.of("Europe/Rome");
+        LocalDate today = LocalDate.now(zoneId);
+
         int productId = 0;
         try{
             productId = Integer.parseInt(request.getParameter("productId"));
@@ -62,10 +65,16 @@ public class GetCompilations extends HttpServlet {
         try{
             product = productService.findProductById(productId);
             if(product==null) throw new Exception();
-        }catch( Exception e){
+        }catch(Exception e){
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to retrieve the product");
             return;
         }
+
+        if(product.getDate().isAfter(today)){
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "NOT PERMITTED!");
+            return;
+        }
+
         try {
             compilations = compilationService.getCompilationList(product.getIdProduct());
             deleted = compilationService.getDeletedCompilation(product.getIdProduct());
