@@ -3,3 +3,13 @@
     max-height: 20% ;
     max-width: 20% ;
 }
+
+.img-4{
+    max-height: 400px;
+    width: auto;
+}
+
+.img-5{
+    max-height: 500px;
+    width: auto;
+}
