@@ -77,7 +77,7 @@ public class CompilationService {
         Compilation c = em.find(Compilation.class, compilation);
         for (int i = 0; i < questionsId.size(); i++) {
             Question q = em.find(Question.class, questionsId.get(i));
-            if(!q.getProduct().getDate().equals(today)) {
+            if(q.getType().equals(QuestionType.DYNAMIC) && !q.getProduct().getDate().equals(today)) {
                 throw new InvalidProductQuestionAssociationException();
             }
             String a = answerText.get(i);

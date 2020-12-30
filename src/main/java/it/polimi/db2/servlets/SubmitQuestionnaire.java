@@ -50,11 +50,13 @@ public class SubmitQuestionnaire extends HttpServlet {
         Buttons of front had should have name="action" and value="submit" or "delete"
          */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         ZoneId zoneId = ZoneId.of("Europe/Rome");
         LocalDate today = LocalDate.now(zoneId);
         Product product;
         Timestamp log;
         String path = "checkQuestionnaireAnswers";
+        String msg = null;
         User u = (User) request.getSession().getAttribute("user");
 
         try{
@@ -85,24 +87,22 @@ public class SubmitQuestionnaire extends HttpServlet {
         try {
             newCompilation = compilationService.createCompilation(u.getId(), product.getIdProduct(), log, deleted);
         } catch (CompilationAlreadyExistingException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
-            return;
+            path = "/WEB-INF/messagePage.html";
+            msg = e.getMessage();
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to create a compilation");
             return;
         }
-        if (action.equalsIgnoreCase("Cancel")) {
+        if (msg!=null) {
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-            ctx.setVariable("msg","Your Questionnaire has been deleted");
+            ctx.setVariable("msg",msg);
             templateEngine.process(path, ctx, response.getWriter());
         } else {
             request.setAttribute("compilation", newCompilation);
             RequestDispatcher rd = request.getRequestDispatcher(path);
             rd.forward(request, response);
         }
-
 
     }
 

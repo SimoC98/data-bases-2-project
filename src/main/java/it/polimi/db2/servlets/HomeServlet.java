@@ -1,9 +1,6 @@
 package it.polimi.db2.servlets;
 
-import it.polimi.db2.entities.User;
-import it.polimi.db2.exception.CompilationAlreadyExistingException;
-import it.polimi.db2.exception.InvalidCredentialsException;
-import it.polimi.db2.exception.ProductAlreadyExistingException;
+
 import it.polimi.db2.services.CompilationService;
 import it.polimi.db2.services.ProductService;
 import it.polimi.db2.services.QuestionService;
@@ -21,10 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 @WebServlet(name = "HomeServlet")
 public class HomeServlet extends HttpServlet {
@@ -74,7 +67,11 @@ public class HomeServlet extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         templateEngine.process(path, ctx, response.getWriter());
-/*
+
+        /*String path = "GetLeaderboardPoints";
+        RequestDispatcher d = request.getRequestDispatcher(path);
+        d.forward(request,response);*/
+        /*
 
 
 
