@@ -44,7 +44,7 @@ public class RegisterUser extends HttpServlet {
         String passwordConf = StringEscapeUtils.escapeJava(request.getParameter("pass_conf"));
 
 
-        if(username==null || email==null || password==null || passwordConf==null || username.isEmpty() || email.isEmpty() || password.isEmpty() || passwordConf.isEmpty() ||!password.equals(passwordConf)) {
+        if(username==null || email==null || password==null || passwordConf==null || username.isEmpty() || email.isEmpty() || password.isEmpty() || passwordConf.isEmpty() ||!password.equals(passwordConf) || password.length()<4) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
             return;
         }
@@ -63,9 +63,6 @@ public class RegisterUser extends HttpServlet {
 
         String path = "index.html";
         if(error!=null) {
-            /*RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-            request.setAttribute("error_msg",error);
-            dispatcher.forward(request,response);*/
             ServletContext servletContext = request.getServletContext();
             final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
             ctx.setVariable("error_msg",error);

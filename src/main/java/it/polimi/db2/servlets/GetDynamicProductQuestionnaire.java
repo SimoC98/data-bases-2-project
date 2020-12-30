@@ -71,12 +71,20 @@ public class GetDynamicProductQuestionnaire extends HttpServlet {
             return;
         }
 
-        List<Question> questions = questionService.findQuestionByProduct(p.getIdProduct());
+        List<Question> questions;
+        try{
+            questions = questionService.findQuestionByProduct(p.getIdProduct());
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to find questions for this product");
+            return;
+        }
 
         path = "/WEB-INF/questionnaire_dynamic.html";
         ctx.setVariable("questions", questions);
         templateEngine.process(path, ctx, response.getWriter());
     }
+
+
 
 
 }

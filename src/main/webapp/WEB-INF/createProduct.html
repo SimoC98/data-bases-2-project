@@ -51,7 +51,7 @@
         <div id="login" class="align-middle w-25 pt-5">
             <form name="questionForm" th:action="@{'createProductQuestions'(product_id=${product.idProduct})}" method="post">
                 <div id="first" class="mb-3">
-                    <input type="text" placeholder="create a question for this product" class="form-control" id="question0" name="question">
+                    <input type="text" placeholder="create a question for this product" class="form-control" id="question0" name="question" required>
                 </div>
                 <div class="row">
                     <button type="button" onclick="addQuestion()" class="btn btn-light w-100">+</button>

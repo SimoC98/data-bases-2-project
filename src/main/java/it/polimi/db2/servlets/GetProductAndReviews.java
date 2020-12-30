@@ -56,7 +56,11 @@ public class GetProductAndReviews extends HttpServlet {
 
         List<Review> reviews = null;
         if(p!=null) {
-            reviews = reviewService.findReviewsByProduct(p.getIdProduct());
+            try {
+                reviews = reviewService.findReviewsByProduct(p.getIdProduct());
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to find reviews for this product");
+            }
         }
 
         String path = "/WEB-INF/Home.html";

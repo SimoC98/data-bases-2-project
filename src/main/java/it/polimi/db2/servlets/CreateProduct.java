@@ -64,16 +64,16 @@ public class CreateProduct extends HttpServlet {
             date = LocalDate.parse(request.getParameter("date"));
             if(date.isBefore(today)) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Invalid date selected");
+                return;
             }
             imagePart = request.getPart("image");
-            //image = IOUtils.toByteArray(imagePart.getInputStream());
             image = ImageUtils.readImage(imagePart.getInputStream());
         } catch(NumberFormatException | NullPointerException e) {
              badRequest = true;
-            //e.printStackTrace();
+            e.printStackTrace();
         }
 
-        if(badRequest || name==null || description==null || image==null) {
+        if(badRequest || name==null || description==null || image==null || price<0 || image.length==0) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
             return;
         }
@@ -87,10 +87,6 @@ public class CreateProduct extends HttpServlet {
             error = e.getMessage();
         }
 
-        /*
-        if error!= null send back to the INSERT page a error message that will be displayed
-        otherwise, send back to the INSERT page the product just created, to let the admin insert some questions
-         */
         String path = "/WEB-INF/createProduct.html";
         ServletContext servletContext = request.getServletContext();
         final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());

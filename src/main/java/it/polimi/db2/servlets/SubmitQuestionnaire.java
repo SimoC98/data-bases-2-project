@@ -57,7 +57,12 @@ public class SubmitQuestionnaire extends HttpServlet {
         String path = "checkQuestionnaireAnswers";
         User u = (User) request.getSession().getAttribute("user");
 
-        product = productService.findProductByDate(today);
+        try{
+            product = productService.findProductByDate(today);
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to find a product for this day");
+            return;
+        }
 
         if (product == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "There is no product today");
@@ -68,6 +73,10 @@ public class SubmitQuestionnaire extends HttpServlet {
 
         Compilation newCompilation = null;
         String action = request.getParameter("action");
+        if(action==null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
+            return;
+        }
         int deleted = 0;
         if (action.equalsIgnoreCase("Cancel")) {
             deleted = 1;
@@ -75,7 +84,6 @@ public class SubmitQuestionnaire extends HttpServlet {
         }
         try {
             newCompilation = compilationService.createCompilation(u.getId(), product.getIdProduct(), log, deleted);
-
         } catch (CompilationAlreadyExistingException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());

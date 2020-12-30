@@ -49,23 +49,26 @@ public class CreateReview extends HttpServlet {
         String reviewTxt = null;
         boolean badRequest = false;
 
-        Product product = productService.findProductByDate(today);
-
-        try {
+        Product product = null;
+        try{
+            product = productService.findProductByDate(today);
             reviewTxt = request.getParameter("review_txt");
         } catch (NumberFormatException e) {
             e.printStackTrace();
             badRequest = true;
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to find a product for this day");
+            return;
         }
+
 
         if(badRequest || reviewTxt==null || reviewTxt.length()==0 || product==null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
             return;
         }
 
-        Review review = null;
         try {
-            review = reviewService.createReview(user.getId(),product.getIdProduct(),reviewTxt);
+            reviewService.createReview(user.getId(),product.getIdProduct(),reviewTxt);
         } catch(Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Impossible to create review");

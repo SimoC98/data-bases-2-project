@@ -42,31 +42,28 @@ public class CreateProductQuestions extends HttpServlet {
         boolean badRequest = false;
         try {
             productId = Integer.parseInt(request.getParameter("product_id"));
-            System.out.println(productId);
             p = productService.findProductById(productId);
             questions = request.getParameterValues("question");
-        } catch (NumberFormatException | NullPointerException e) {
+        } catch (Exception e) {
             badRequest = true;
         }
 
-        if(badRequest || p==null || questions==null) {
+        if(badRequest || p==null || questions==null || questions.length==0) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
             return;
         }
 
         try {
-            for(int i=0; i<questions.length;i++) {
-                questionService.createQuestion(questions[i],p.getIdProduct());
+            for (String question : questions) {
+                questionService.createQuestion(question, p.getIdProduct());
             }
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to add questions for this product");
             return;
         }
 
-
-        String path = "getProductReviews";
+        String path = "/WEB-INF/homePageAdmin.html";
         response.sendRedirect(path);
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

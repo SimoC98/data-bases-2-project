@@ -55,7 +55,6 @@ public class CheckLogin extends HttpServlet {
         User user = null;
         try {
             user = userService.checkCredentials(username, password);
-            System.out.println(user);
         } catch (InvalidCredentialsException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
@@ -70,9 +69,6 @@ public class CheckLogin extends HttpServlet {
             final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
             ctx.setVariable("error_msg", "Wrong credentials... please try again or register");
             templateEngine.process(path, ctx, response.getWriter());
-            //request.setAttribute("error_msg","Wrong credentials... please try again or register");
-            //RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-            //dispatcher.forward(request,response);
         } else {
             request.getSession().setAttribute("user", user);
 

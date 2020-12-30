@@ -61,6 +61,7 @@ public class GetCompilations extends HttpServlet {
         List<Compilation> deleted = null;
         try{
             product = productService.findProductById(productId);
+            if(product==null) throw new Exception();
         }catch( Exception e){
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to retrieve the product");
             return;
@@ -72,8 +73,6 @@ public class GetCompilations extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible to retrieve Compilation informations");
             return;
         }
-
-
 
         String path = "/WEB-INF/inspectCompilation.html";
         ServletContext servletContext = request.getServletContext();

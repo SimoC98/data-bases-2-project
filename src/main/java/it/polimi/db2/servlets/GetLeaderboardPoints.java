@@ -52,7 +52,13 @@ public class GetLeaderboardPoints extends HttpServlet {
         ZoneId zoneId = ZoneId.of("Europe/Rome");
         LocalDate today = LocalDate.now(zoneId);
 
-        Product product = productService.findProductByDate(today);
+        Product product;
+        try {
+            product = productService.findProductByDate(today);
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible find a product for today");
+            return;
+        }
 
         if(product==null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,"There is no product today");
@@ -70,7 +76,7 @@ public class GetLeaderboardPoints extends HttpServlet {
         List<String> users = new ArrayList<>();
         List<Integer> points = new ArrayList<>();
         if(!compilations.isEmpty()) {
-            compilations.stream().forEach(x -> {
+            compilations.forEach(x -> {
                 users.add(x.getUser().getUsername());
                 points.add(x.getPoints());
             });

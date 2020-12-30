@@ -5,6 +5,7 @@ import it.polimi.db2.entities.Compilation;
 import it.polimi.db2.entities.User;
 import it.polimi.db2.exception.BadWordException;
 import it.polimi.db2.exception.EmptyAnswerException;
+import it.polimi.db2.exception.InvalidProductQuestionAssociationException;
 import it.polimi.db2.services.CompilationService;
 import it.polimi.db2.services.UserService;
 import org.thymeleaf.TemplateEngine;
@@ -44,26 +45,25 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
         templateResolver.setSuffix(".html");
     }
 
-    //TODO: alternative options?
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Compilation compilation = (Compilation) request.getAttribute("compilation");
         User u = (User) request.getSession().getAttribute("user");
 
+        if(compilation==null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Error! There is not a compilation for this user and product");
+            return;
+        }
+
         ServletContext servletContext = request.getServletContext();
         final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
         String path = null;
-
-        if(compilation==null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Incorrect or missing param values");
-            return;
-        }
 
         List<Integer> questions = new ArrayList<>();
         List<String> answers = new ArrayList<>();
         Enumeration<String> params = request.getParameterNames();
         while(params.hasMoreElements()) {
             String par = params.nextElement();
-            if(!par.equals("product_id") && !par.equals("action")) {
+            if(!par.equals("action")) {
                 Integer questionId = null;
                 try {
                     questionId = Integer.parseInt(par);
@@ -74,7 +74,6 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
                 String answerText = request.getParameter(par);
                 questions.add(questionId);
                 answers.add(answerText);
-
             }
         }
         try{
@@ -82,13 +81,21 @@ public class CheckQuestionnaireAnswers extends HttpServlet {
         } catch (BadWordException e) {
             e.printStackTrace();
             userService.blockUser(u);
-            //response.sendError(HttpServletResponse.SC_BAD_REQUEST,"You have been blocked");
             ctx.setVariable("msg","You have been blocked");
             path = "/WEB-INF/messagePage.html";
             templateEngine.process(path,ctx,response.getWriter());
             return;
         } catch (EmptyAnswerException e) {
             e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"You have not compiled marketing questions");
+            return;
+        } catch (InvalidProductQuestionAssociationException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Question not associated with product of today");
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Not possible create answers");
+            return;
         }
         ctx.setVariable("msg","Congratulation! You have compiled a questionnaire");
         path = "/WEB-INF/messagePage.html";
