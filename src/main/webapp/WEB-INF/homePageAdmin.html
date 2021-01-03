@@ -11,15 +11,27 @@
 &nbsp;
 <h1 style="text-align: center; " class="display-1" >Admin Home Page</h1>
 <div style="text-align: center;">
-    <img class="img" th:src="@{images/Buttons.JPG}">
+    <img class="img" id="img" th:src="@{images/Two-Buttons.jpg}">
 </div>
 &nbsp;
-<div style="text-align: center;">
-    <a class="btn mt-auto btn-info btn-circle text-white" th:href="@{/createProduct}" type="button"> Create a product </a>
+<div class="text-center">
+    <a class="btn mt-auto btn-danger btn-circle text-white" onmouseenter="changeRed()" onmouseleave="changeDecision()" th:href="@{/createProduct}" type="button"> Create a product </a>
     &nbsp;
-    <a class="btn mt-auto btn-info btn-circle text-white" th:href="@{/getAllProducts}" type="button"> See all products </a>
+    <a class="btn mt-auto btn-primary btn-circle text-white" onmouseenter="changeBlue()" onmouseleave="changeDecision()" th:href="@{/getAllProducts}" type="button"> See all products </a>
 </div>
 
 
 </body>
+<script>
+    function changeRed() {
+        document.getElementById("img").src = "images/red_button.png";
+    }
+    function changeBlue(){
+        document.getElementById("img").src = "images/blue_button.png";
+    }
+    function changeDecision(){
+        document.getElementById("img").src = "images/Two-Buttons.jpg";
+    }
+
+</script>
 </html>
