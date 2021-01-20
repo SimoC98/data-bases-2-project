@@ -63,7 +63,10 @@ public class CreateProductQuestions extends HttpServlet {
         }
 
         String path = "/WEB-INF/homePageAdmin.html";
-        response.sendRedirect(path);
+        //response.sendRedirect(path);
+        ServletContext servletContext = request.getServletContext();
+        final WebContext ctx = new WebContext(request,response,servletContext,request.getLocale());
+        templateEngine.process(path,ctx,response.getWriter());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
