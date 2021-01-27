@@ -126,6 +126,14 @@
         <servlet-name>GetCompilations</servlet-name>
         <url-pattern>/getCompilations</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GoToAdminHomePage</servlet-name>
+        <servlet-class>it.polimi.db2.servlets.GoToAdminHomePage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GoToAdminHomePage</servlet-name>
+        <url-pattern>/goToAdminHomePage</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>UserFilter</filter-name>
