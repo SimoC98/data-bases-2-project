@@ -2,6 +2,7 @@ package it.polimi.db2.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -39,6 +40,7 @@ public class Question implements Serializable {
     public Question(String questionText, QuestionType type){
         this.questionText = questionText;
         this.type = type;
+        compilations = new ArrayList<>();
     }
 
     public Integer getIdQuestion() {

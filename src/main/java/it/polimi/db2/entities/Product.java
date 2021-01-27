@@ -3,6 +3,7 @@ package it.polimi.db2.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -56,6 +57,9 @@ public class Product implements Serializable {
         this.price = price;
         this.date = date;
         this.image = image;
+        questions = new ArrayList<>();
+        compilations = new ArrayList<>();
+        reviews = new ArrayList<>();
     }
 
     public Integer getIdProduct() {
