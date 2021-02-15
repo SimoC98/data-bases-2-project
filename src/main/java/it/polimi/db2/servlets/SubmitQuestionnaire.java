@@ -82,6 +82,7 @@ public class SubmitQuestionnaire extends HttpServlet {
         int deleted = 0;
         if (action.equalsIgnoreCase("Cancel")) {
             deleted = 1;
+            msg = "your questionnaire has been deleted!";
             path = "/WEB-INF/messagePage.html";
         }
         try {
