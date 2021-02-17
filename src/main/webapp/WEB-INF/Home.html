@@ -9,6 +9,9 @@
           th:href="@{/css/bootstrap.css}" type="text/css"/>
 </head>
 <body>
+    <div class="w-100 navbar navbar-light px-3">
+        <a th:href="@{/logout}" type="button" class="btn btn-outline-info">Logout</a>
+    </div>
     <p class="h2 text-center">Home</p>
     <div th:if="${product != null}" class="align-content-center">
         <p class="h2 text-primary m-3 text-capitalize" th:text="${product.getName()}"></p>

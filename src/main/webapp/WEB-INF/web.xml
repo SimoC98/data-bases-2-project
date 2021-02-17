@@ -134,6 +134,15 @@
         <servlet-name>GoToAdminHomePage</servlet-name>
         <url-pattern>/goToAdminHomePage</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>it.polimi.db2.servlets.Logout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
 
     <filter>
         <filter-name>UserFilter</filter-name>
