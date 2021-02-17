@@ -10,9 +10,9 @@
 <body onload="myFunction()">
 <h1 class="title text-center p-3">List of Products</h1>
 <div class="container">
-    <div class="row align-items-stretch justify-content-start card-deck">
+    <div class="row mx-5 align-items-stretch justify-content-start card-deck te">
         <div th:each="p : ${products}">
-            <div class="card h-100" style="width: 18rem;">
+            <div class="card h-100" style="width: 19rem;">
                 <img class="card-img-top img-4" th:if="${p.getImage() != null}"
                      th:src="*{'data:image/png;base64,'+p.getImageData()}"/>
                 <img class="card-img-top" th:if="${p.getImage() == null}"

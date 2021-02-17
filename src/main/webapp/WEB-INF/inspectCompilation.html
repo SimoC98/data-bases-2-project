@@ -71,9 +71,11 @@
             <p class="col m-0"> Log </p>
         </div>
         <ul class="list-group list-group-flush" th:each="d: ${deleted}">
-            <li class="list-group-item-danger row text-center">
-                <p class="col m-0" th:text="${d.getUser().getUsername()}"></p>
-                <p class="col m-0" th:text="${d.getLog()}"></p>
+            <li class="list-group-item list-group-item-danger">
+                <div class="row text-center">
+                    <p class="col m-0" th:text="${d.getUser().getUsername()}"></p>
+                    <p class="col m-0" th:text="${d.getLog()}"></p>
+                </div>
             </li>
         </ul>
     </div>
